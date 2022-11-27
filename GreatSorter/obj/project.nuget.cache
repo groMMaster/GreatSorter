@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Myll7rVooUp5zFCZ9NlyKsnHsnXcYsSawfB8m+q2BrZVgBWqOZNWw0Vfpu/CzEJSZjrtrAQorbKHnnDU0bzaoA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\groMM\\source\\repos\\GreatSorter\\GreatSorter\\GreatSorter.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\groMM\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\groMM\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

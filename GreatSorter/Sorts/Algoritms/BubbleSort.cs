@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GreatSorter
 {
     public class BubbleSort<T>
         where T : IComparable
     {
-        public static T[] Sort(T[] array)
+        public IEnumerable<T[]> Sort(T[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -14,11 +15,10 @@ namespace GreatSorter
                     if (array[i].CompareTo(array[j]) > 0)
                     {
                         array.Swap(i, j);
+                        yield return array;
                     }
                 }
             }
-
-            return array;
         }
     }
 }

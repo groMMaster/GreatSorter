@@ -27,5 +27,17 @@ namespace GreatSorter
 
             return result;
         }
+
+        public static string ToString<T>(this T[] array)
+        {
+            var result = new StringBuilder();
+            foreach (var e in array)
+            {
+                result.Append(e);
+                result.Append(" ");
+            }
+
+            return result.ToString();
+        }
     }
 }

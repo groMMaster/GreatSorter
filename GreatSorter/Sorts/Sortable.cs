@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GreatSorter.Sorts
+namespace GreatSorter
 {
-    class Sortable
+    public abstract class Sortable<T>
     {
+        public Observer Observer;
+        public abstract T[] Sort(T[] array);
+    }
+
+    public class Observer
+    {
+
     }
 }

@@ -7,23 +7,25 @@ namespace GreatSorter
     public class SelectionSort<T>
         where T: IComparable
     {
-        public static T[] Sort(T[] array)
+        public static IEnumerable<T[]> Sort(T[] array)
         {
-            return Sort(array, 0);
-        }
-
-        private static T[] Sort(T[] array, int currentIndex)
-        {
-            if (currentIndex == array.Length)
-                return array;
-
-            var minIndex = array.IndexOfMin(currentIndex);
-            if (minIndex != currentIndex)
+            yield return array;
+            for (int i = 0; i < array.Length - 1; i++)
             {
-                array.Swap(minIndex, currentIndex);
-            }
+                var smallestVal = i;
+                for (int j = i + 1; j < array.Length; j++)
+                {
+                    if (array[j].CompareTo(array[smallestVal]) < 0)
+                    {
+                        smallestVal = j;
+                    }
+                }
 
-            return Sort(array, ++currentIndex);
+                (array[smallestVal], array[i]) = (array[i], array[smallestVal]);
+
+                yield return array;
+            }
+            
         }
     }
 }

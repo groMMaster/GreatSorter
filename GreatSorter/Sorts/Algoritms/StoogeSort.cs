@@ -7,12 +7,12 @@ namespace GreatSorter
     public class StoogeSort<T>
         where T : IComparable
     {
-        public static T[] Sort(T[] array)
+        public static IEnumerable<T[]> Sort(T[] array)
         {
-            return Sort(array, 0, array.Length - 1);
+            yield return Sort(array, 0, array.Length - 1);
         }
 
-        private static T[] Sort(T[] array, int startIndex, int endIndex)
+        private static IEnumerable<T[]> Sort(T[] array, int startIndex, int endIndex)
         {
             if (array[startIndex].CompareTo(array[endIndex]) > 0)
             {
@@ -27,7 +27,7 @@ namespace GreatSorter
                 Sort(array, startIndex, endIndex - len);
             }
 
-            return array;
+            yield return array;
         }
     }
 }

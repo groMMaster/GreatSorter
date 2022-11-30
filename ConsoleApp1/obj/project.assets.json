@@ -27,19 +27,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\groMM\\.nuget\\packages\\": {}
+    "C:\\Users\\QmRite\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\groMM\\source\\repos\\GreatSorter\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectUniqueName": "C:\\Users\\QmRite\\Source\\Repos\\GreatSorter\\ConsoleApp1\\ConsoleApp1.csproj",
       "projectName": "ConsoleApp1",
-      "projectPath": "C:\\Users\\groMM\\source\\repos\\GreatSorter\\ConsoleApp1\\ConsoleApp1.csproj",
-      "packagesPath": "C:\\Users\\groMM\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\groMM\\source\\repos\\GreatSorter\\ConsoleApp1\\obj\\",
+      "projectPath": "C:\\Users\\QmRite\\Source\\Repos\\GreatSorter\\ConsoleApp1\\ConsoleApp1.csproj",
+      "packagesPath": "C:\\Users\\QmRite\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\QmRite\\Source\\Repos\\GreatSorter\\ConsoleApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\groMM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\QmRite\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -51,9 +51,10 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\groMM\\source\\repos\\GreatSorter\\GreatSorter\\GreatSorter.csproj": {
-              "projectPath": "C:\\Users\\groMM\\source\\repos\\GreatSorter\\GreatSorter\\GreatSorter.csproj"
+            "C:\\Users\\QmRite\\Source\\Repos\\GreatSorter\\GreatSorter\\GreatSorter.csproj": {
+              "projectPath": "C:\\Users\\QmRite\\Source\\Repos\\GreatSorter\\GreatSorter\\GreatSorter.csproj"
             }
           }
         }
@@ -66,6 +67,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "imports": [
           "net461",
           "net462",
@@ -81,7 +83,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.425\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.414\\RuntimeIdentifierGraph.json"
       }
     }
   }

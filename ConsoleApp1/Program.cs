@@ -7,7 +7,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var a = new [] { '4', '9', '7', '6', '2', '3' };
+            var a = new [] { '2', '4', '5', '3', '1'};
             foreach (var e in StoogeSort<char>.Sort(a))
             {
                 Console.WriteLine(e);

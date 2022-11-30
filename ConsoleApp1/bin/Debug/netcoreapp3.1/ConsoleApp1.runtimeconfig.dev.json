@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\QmRite\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\QmRite\\.nuget\\packages"
-    ]
-  }
-}

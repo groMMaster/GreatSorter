@@ -1,17 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GreatSorter
 {
-    public abstract class Sortable<T>
+    public class Sorter<T>
+        where T: IComparable
     {
-        public Observer Observer;
-        public abstract T[] Sort(T[] array);
+        T[] Array { get; }
+        private ISortAlgoritm algoritm;
+        private TimeSpan execute;
+
+        public Sorter(T[] array, ISortAlgoritm algoritm)
+        {
+            Array = array;
+            this.algoritm = algoritm;
+        }
+
+        public IEnumerable<T[]> GetLog()
+        {
+            return algoritm.Sort(Array);
+        }
+
+        public T[] GetResult()
+        {
+            return algoritm.Sort(Array).Last();
+        }
     }
 
-    public class Observer
+    public interface ISortAlgoritm
     {
-
+        IEnumerable<T[]> Sort<T>(T[] array)
+            where T : IComparable;
     }
 }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace GreatSorter
 {
-    public class BubbleSort<T>
-        where T : IComparable
+    public class BubbleSort : ISortAlgoritm
     {
-        public IEnumerable<T[]> Sort(T[] array)
+        public IEnumerable<T[]> Sort<T>(T[] array)
+            where T: IComparable
         {
             for (int i = 0; i < array.Length; i++)
             {

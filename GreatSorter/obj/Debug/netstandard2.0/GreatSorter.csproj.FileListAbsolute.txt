@@ -1,9 +1,0 @@
-C:\Users\groMM\source\repos\GreatSorter\GreatSorter\obj\Debug\netstandard2.0\GreatSorter.csprojAssemblyReference.cache
-C:\Users\groMM\source\repos\GreatSorter\GreatSorter\obj\Debug\netstandard2.0\GreatSorter.AssemblyInfoInputs.cache
-C:\Users\groMM\source\repos\GreatSorter\GreatSorter\obj\Debug\netstandard2.0\GreatSorter.AssemblyInfo.cs
-C:\Users\groMM\source\repos\GreatSorter\GreatSorter\obj\Debug\netstandard2.0\GreatSorter.csproj.CoreCompileInputs.cache
-C:\Users\groMM\source\repos\GreatSorter\GreatSorter\bin\Debug\netstandard2.0\GreatSorter.deps.json
-C:\Users\groMM\source\repos\GreatSorter\GreatSorter\bin\Debug\netstandard2.0\GreatSorter.dll
-C:\Users\groMM\source\repos\GreatSorter\GreatSorter\bin\Debug\netstandard2.0\GreatSorter.pdb
-C:\Users\groMM\source\repos\GreatSorter\GreatSorter\obj\Debug\netstandard2.0\GreatSorter.dll
-C:\Users\groMM\source\repos\GreatSorter\GreatSorter\obj\Debug\netstandard2.0\GreatSorter.pdb

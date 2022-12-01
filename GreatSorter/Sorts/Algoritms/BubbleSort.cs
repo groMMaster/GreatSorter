@@ -1,12 +1,16 @@
-﻿using System;
+﻿using GreatSorter.Sorts;
+using System;
 using System.Collections.Generic;
 
 namespace GreatSorter
 {
-    public class BubbleSort : ISortAlgoritm
+    public class BubbleSort<T> : AbstractSortAlgorithm<T>
+        where T : IComparable
+        
     {
-        public IEnumerable<T[]> Sort<T>(T[] array)
-            where T: IComparable
+        public override event ArrayChangesHandler Notify;
+
+        public override void Sort(T[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -15,7 +19,7 @@ namespace GreatSorter
                     if (array[i].CompareTo(array[j]) > 0)
                     {
                         array.Swap(i, j);
-                        yield return array;
+                        Notify.Invoke(array);
                     }
                 }
             }

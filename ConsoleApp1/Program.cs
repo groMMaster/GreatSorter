@@ -9,15 +9,15 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var a = new int[] { 3, 2, 1, 0};
-            var b = new SortableArray<int>(a);
-            Console.WriteLine(b);
-            var sort = new Sorter<int>(a, new StoogeSort());
-            var log = sort.GetLog();
-            foreach (var e in log)
-            {
-                Console.WriteLine(String.Join(' ', e));
-            }
+            var a = new [] { '3', '2', '1', '0'};
+
+            var b = new StoogeSort<char>();
+            void DisplayMessage(char[] message) => Console.WriteLine(message);
+
+            b.Notify += DisplayMessage;
+
+            b.Sort(a);
+
         }
     }
 }

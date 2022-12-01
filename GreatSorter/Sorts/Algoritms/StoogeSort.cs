@@ -1,24 +1,26 @@
-﻿using System;
+﻿using GreatSorter.Sorts;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace GreatSorter
 {
-    public class StoogeSort : ISortAlgoritm
+    public class StoogeSort<T> : AbstractSortAlgorithm<T>
+        where T : IComparable
     {
-        public IEnumerable<T[]> Sort<T>(T[] array)
-            where T : IComparable
+        public override event ArrayChangesHandler Notify;
+
+        public override void Sort(T[] array)
         {
-            return Sort(array, 0, array.Length - 1);
+            Sort(array, 0, array.Length - 1);
         }
 
-        private IEnumerable<T[]> Sort<T>(T[] array, int startIndex, int endIndex)
-            where T : IComparable
+        private void Sort(T[] array, int startIndex, int endIndex)
         {
             if (array[startIndex].CompareTo(array[endIndex]) > 0)
             {
                 array.Swap(startIndex, endIndex);
-                yield return array;
+                Notify.Invoke(array);
             }
 
             if (endIndex - startIndex > 1)

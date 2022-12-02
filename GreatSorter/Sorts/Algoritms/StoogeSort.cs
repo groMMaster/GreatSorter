@@ -5,12 +5,10 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class StoogeSort<T> : AbstractSortAlgorithm<T>
+    public class StoogeSort<T>
         where T : IComparable
     {
-        public override event ArrayChangesHandler Notify;
-
-        public override void Sort(T[] array)
+        public void Sort(T[] array)
         {
             Sort(array, 0, array.Length - 1);
         }
@@ -20,7 +18,7 @@ namespace GreatSorter
             if (array[startIndex].CompareTo(array[endIndex]) > 0)
             {
                 array.Swap(startIndex, endIndex);
-                Notify.Invoke(array);
+                //Notify.Invoke(array);
             }
 
             if (endIndex - startIndex > 1)

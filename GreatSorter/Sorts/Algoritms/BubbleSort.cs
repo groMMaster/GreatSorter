@@ -8,7 +8,7 @@ namespace GreatSorter
         where T : IComparable
         
     {
-        public override event ArrayChangesHandler Notify;
+        public override event Action<T[]> ArrayChangesNotify;
 
         public override void Sort(T[] array)
         {
@@ -19,7 +19,7 @@ namespace GreatSorter
                     if (array[i].CompareTo(array[j]) > 0)
                     {
                         array.Swap(i, j);
-                        Notify.Invoke(array);
+                        ArrayChangesNotify.Invoke(array);
                     }
                 }
             }

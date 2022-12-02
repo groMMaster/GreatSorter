@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GreatSorter;
+using GreatSorter.Sorts;
 
 namespace ConsoleApp1
 {
@@ -11,13 +12,10 @@ namespace ConsoleApp1
         {
             var a = new [] { '3', '2', '1', '0'};
 
-            var b = new StoogeSort<char>();
-            void DisplayMessage(char[] message) => Console.WriteLine(message);
+            var b = new SortHandler<char>(a, new BubbleSort<char>(),
+                x => Console.WriteLine(x));
 
-            b.Notify += DisplayMessage;
-
-            b.Sort(a);
-
+            b.Sort();
         }
     }
 }

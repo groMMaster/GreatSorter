@@ -6,13 +6,6 @@ namespace GreatSorter
 {
     internal static class Extension
     {
-        public static void Swap<T>(this T[] array, int firstIndex, int secondIndex)
-        {
-            var temp = array[firstIndex];
-            array[firstIndex] = array[secondIndex];
-            array[secondIndex] = temp;
-        }
-
         public static int IndexOfMin<T>(this T[] array, int startIndex)
             where T: IComparable
         {
@@ -28,16 +21,9 @@ namespace GreatSorter
             return result;
         }
 
-        public static string ToString<T>(this T[] array)
+        public static string ToString(this int[] array)
         {
-            var result = new StringBuilder();
-            foreach (var e in array)
-            {
-                result.Append(e);
-                result.Append(" ");
-            }
-
-            return result.ToString();
+            return String.Join(" ", array);
         }
     }
 }

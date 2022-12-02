@@ -4,21 +4,19 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class StoogeSort : ISortAlgoritm
+    public class StoogeSort<T> : ISortAlgoritm<T>
+        where T : IComparable
     {
-        public IEnumerable<T[]> Sort<T>(T[] array)
-            where T : IComparable
+        public SortableArray<T> Sort(SortableArray<T> array)
         {
             return Sort(array, 0, array.Length - 1);
         }
 
-        private IEnumerable<T[]> Sort<T>(T[] array, int startIndex, int endIndex)
-            where T : IComparable
+        private SortableArray<T> Sort(SortableArray<T> array, int startIndex, int endIndex)
         {
-            if (array[startIndex].CompareTo(array[endIndex]) > 0)
+            if (array.Values[startIndex].CompareTo(array.Values[endIndex]) > 0)
             {
                 array.Swap(startIndex, endIndex);
-                yield return array;
             }
 
             if (endIndex - startIndex > 1)
@@ -28,6 +26,8 @@ namespace GreatSorter
                 Sort(array, startIndex + len, endIndex);
                 Sort(array, startIndex, endIndex - len);
             }
+
+            return array;
         }
     }
 }

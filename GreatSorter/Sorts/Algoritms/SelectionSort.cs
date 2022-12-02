@@ -4,20 +4,20 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class SelectionSort<T>
-        where T: IComparable
+    public class SelectionSort<T> : ISortAlgoritm<T>
+        where T : IComparable
     {
-        public static T[] Sort(T[] array)
+        public SortableArray<T> Sort(SortableArray<T> array)
         {
             return Sort(array, 0);
         }
 
-        private static T[] Sort(T[] array, int currentIndex)
+        private SortableArray<T> Sort(SortableArray<T> array, int currentIndex)
         {
             if (currentIndex == array.Length)
                 return array;
 
-            var minIndex = array.IndexOfMin(currentIndex);
+            var minIndex = array.Values.IndexOfMin(currentIndex);
             if (minIndex != currentIndex)
             {
                 array.Swap(minIndex, currentIndex);

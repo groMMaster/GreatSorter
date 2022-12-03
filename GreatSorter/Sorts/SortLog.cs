@@ -5,20 +5,24 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class SortLog<T> : IObserver
+    public interface ISortLog<T>
+    {
+        void Update(object sender, object eventData);
+    }
+    public class SortLog<T>
     {
         private T[] start;
-        private List<int[]> log;
+        private List<SwapIndexes> log;
 
         public SortLog(T[] start)
         {
             this.start = start;
-            log = new List<int[]> { };
+            log = new List<SwapIndexes> { };
         }
 
-        public void Update(int[] eventData)
+        public void Update(object sender, object eventData)
         {
-            log.Add(eventData);
+            log.Add((SwapIndexes)eventData);
         }
 
         public IEnumerable<T[]> GetLog()
@@ -26,9 +30,9 @@ namespace GreatSorter
             yield return start;
 
             var array = (T[])start.Clone();
-            foreach (var indexes in log)
+            foreach (var e in log)
             {
-                Swap(array, indexes[0], indexes[1]);
+                Swap(array, e.First, e.Second);
                 yield return array;
             }
         }

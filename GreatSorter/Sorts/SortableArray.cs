@@ -5,18 +5,17 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class SortableArray<T> : ISubject
+    public class SortableArray<T>
         where T : IComparable
     {
         public T[] Values { get; }
         public int Length => Values.Length;
 
-        private List<IObserver> observers;
+        private event EventHandler observers;
 
         public SortableArray(params T[] values)
         {
             Values = values;
-            observers = new List<IObserver> { };
         }
 
         public void Swap(int firstIndex, int secondIndex)
@@ -24,31 +23,40 @@ namespace GreatSorter
             var temp = Values[firstIndex];
             Values[firstIndex] = Values[secondIndex];
             Values[secondIndex] = temp;
-            NotifyObserver(new int[] { firstIndex, secondIndex });
+            NotifyObserver(new SwapIndexes(firstIndex, secondIndex));
         }
 
-        public void RegisterObserver(IObserver observer)
+        public void RegisterObserver(SortLog<T> observer)
         {
-            observers.Add(observer);
+            observers += observer.Update;
         }
 
-        public void NotifyObserver(int[] eventData)
+        public void NotifyObserver(EventArgs eventData)
         {
-            foreach (var observer in observers)
-            {
-                observer.Update(eventData);
-            }
+            observers?.Invoke(this, eventData);
         }
 
-        public void RemoveObserver(IObserver observer)
+        public void RemoveObserver(ISortLog<T> observer)
         {
-            observers.Remove(observer);
+            observers -= observer.Update;
         }
 
         public override string ToString()
         {
             var strValues = Values.Select(x => x.ToString());
             return String.Join(" ", strValues);
+        }
+    }
+
+    public class SwapIndexes : EventArgs
+    { 
+        public int First { get; }
+        public int Second { get; }
+
+        public SwapIndexes(int first, int second)
+        {
+            First = first;
+            Second = second;
         }
     }
 }

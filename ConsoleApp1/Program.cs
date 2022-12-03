@@ -10,7 +10,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             var a = new int[] { 3, 2, 5, 0};
-            var sorter = new Sorter<int>(a, new BubbleSort<int>());
+            var sorter = new HandlerSort<int>(a, new StoogeSort<int>());
             Console.WriteLine(sorter.Log.ToString());
         }
     }

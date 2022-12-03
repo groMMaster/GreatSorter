@@ -5,10 +5,6 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public interface ISortLog<T>
-    {
-        void Update(object sender, object eventData);
-    }
     public class SortLog<T>
     {
         private T[] start;

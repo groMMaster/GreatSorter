@@ -36,7 +36,7 @@ namespace GreatSorter
             observers?.Invoke(this, eventData);
         }
 
-        public void RemoveObserver(ISortLog<T> observer)
+        public void RemoveObserver(SortLog<T> observer)
         {
             observers -= observer.Update;
         }

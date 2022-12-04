@@ -26,6 +26,20 @@ namespace GreatSorter
             NotifyObserver(new SwapIndexes(firstIndex, secondIndex));
         }
 
+        public int IndexOfMin(int startIndex)
+        {
+            int result = startIndex;
+            for (var i = startIndex; i < Values.Length; ++i)
+            {
+                if (Values[i].CompareTo(Values[result]) < 0)
+                {
+                    result = i;
+                }
+            }
+
+            return result;
+        }
+
         public void RegisterObserver(SortLog<T> observer)
         {
             observers += observer.Update;
@@ -39,6 +53,14 @@ namespace GreatSorter
         public void RemoveObserver(SortLog<T> observer)
         {
             observers -= observer.Update;
+        }
+
+        public T this[int index]
+        {
+            get
+            {
+                return Values[index];
+            }
         }
 
         public override string ToString()

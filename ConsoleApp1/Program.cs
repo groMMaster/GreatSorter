@@ -9,8 +9,8 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var a = new int[] { 3, 2, 5, 0};
-            var sorter = new HandlerSort<int>(a, new StoogeSort<int>());
+            var a = new int[] { 3, 2, 5, 0, 10};
+            var sorter = new HandlerSort<int>(a, new GnomeSort<int>());
             Console.WriteLine(sorter.Log.ToString());
         }
     }

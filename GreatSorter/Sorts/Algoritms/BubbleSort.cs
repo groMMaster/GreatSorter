@@ -12,7 +12,7 @@ namespace GreatSorter
             {
                 for (int j = i + 1; j < array.Length; j++)
                 {
-                    if (array.Values[i].CompareTo(array.Values[j]) > 0)
+                    if (array[i].CompareTo(array[j]) > 0)
                     {
                         array.Swap(i, j);
                     }

@@ -14,7 +14,7 @@ namespace GreatSorter
 
         private SortableArray<T> Sort(SortableArray<T> array, int startIndex, int endIndex)
         {
-            if (array.Values[startIndex].CompareTo(array.Values[endIndex]) > 0)
+            if (array[startIndex].CompareTo(array[endIndex]) > 0)
             {
                 array.Swap(startIndex, endIndex);
             }

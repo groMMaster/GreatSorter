@@ -16,8 +16,7 @@ namespace GreatSorter
         {
             if (currentIndex == array.Length)
                 return array;
-
-            var minIndex = array.Values.IndexOfMin(currentIndex);
+            var minIndex = array.IndexOfMin(currentIndex);
             if (minIndex != currentIndex)
             {
                 array.Swap(minIndex, currentIndex);

@@ -8,30 +8,28 @@ namespace GreatSorter
     public class SortableArray<T>
         where T : IComparable
     {
-        public T[] Values { get; }
-        public int Length => Values.Length;
+        private T[] values;
+        public int Length => values.Length;
 
         private event EventHandler observers;
 
         public SortableArray(params T[] values)
         {
-            Values = values;
+            this.values = values;
         }
 
         public void Swap(int firstIndex, int secondIndex)
         {
-            var temp = Values[firstIndex];
-            Values[firstIndex] = Values[secondIndex];
-            Values[secondIndex] = temp;
+            values.Swap(firstIndex, secondIndex);
             NotifyObserver(new SwapIndexes(firstIndex, secondIndex));
         }
 
         public int IndexOfMin(int startIndex)
         {
             int result = startIndex;
-            for (var i = startIndex; i < Values.Length; ++i)
+            for (var i = startIndex; i < values.Length; ++i)
             {
-                if (Values[i].CompareTo(Values[result]) < 0)
+                if (values[i].CompareTo(values[result]) < 0)
                 {
                     result = i;
                 }
@@ -40,7 +38,7 @@ namespace GreatSorter
             return result;
         }
 
-        public void RegisterObserver(SortLog<T> observer)
+        public void RegisterObserver(IObserver observer)
         {
             observers += observer.Update;
         }
@@ -59,14 +57,14 @@ namespace GreatSorter
         {
             get
             {
-                return Values[index];
+                return values[index];
             }
         }
 
         public override string ToString()
         {
-            var strValues = Values.Select(x => x.ToString());
-            return String.Join(" ", strValues);
+            var strvalues = values.Select(x => x.ToString());
+            return String.Join(" ", strvalues);
         }
     }
 

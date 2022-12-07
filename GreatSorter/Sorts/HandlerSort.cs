@@ -11,6 +11,7 @@ namespace GreatSorter
         SortableArray<T> Array { get; }
         public SortLog<T> Log;
         public ISortAlgoritm<T> Type;
+        public RealTimeSorter RealTimeSorter;
 
         public HandlerSort(T[] array, ISortAlgoritm<T> typeSort)
         {

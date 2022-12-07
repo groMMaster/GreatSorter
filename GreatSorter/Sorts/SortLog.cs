@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class SortLog<T>
+    public class SortLog<T> : IObserver
     {
         private T[] start;
         private List<SwapIndexes> log;
@@ -28,16 +28,9 @@ namespace GreatSorter
             var array = (T[])start.Clone();
             foreach (var e in log)
             {
-                Swap(array, e.First, e.Second);
+                array.Swap(e.First, e.Second);
                 yield return array;
             }
-        }
-
-        private void Swap(T[] array, int firstIndex, int secondIndex)
-        {
-            var temp = array[firstIndex];
-            array[firstIndex] = array[secondIndex];
-            array[secondIndex] = temp;
         }
 
         public override string ToString()

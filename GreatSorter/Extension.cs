@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace GreatSorter
             array[firstIndex] = array[secondIndex];
             array[secondIndex] = temp;
         }
-        public static string ToString(this int[] array)
+        public static string ToString<T>(this T[] array)
         {
             return String.Join(" ", array);
         }

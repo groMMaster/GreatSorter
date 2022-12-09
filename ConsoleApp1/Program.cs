@@ -10,8 +10,9 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             var a = new int[] { 3, 2, 5, 0, 10};
-            var sorter = new HandlerSort<int>(a, new QuickSort<int>());
-            Console.WriteLine(sorter.Log.ToString());
+            var sorter = new HandlerSort<int>();
+            var real = sorter.Sorter;
+            sorter.Start(a, new QuickSort<int>());
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -8,39 +9,46 @@ namespace GreatSorter
     public class SortableArray<T>
         where T : IComparable
     {
-        private T[] value;
-        public int Length => value.Length;
+        private T[] values;
+
+        public ReadOnlyCollection<T> GetValues => Array.AsReadOnly(values);
+        public int Length => values.Length;
 
         private event EventHandler observers;
 
-        public SortableArray(params T[] value)
+        public SortableArray(params T[] values)
         {
-            this.value = value;
-        }
-
-        public T[] GetValues()
-        {
-            return value;
+            this.values = values;
         }
 
         public void Swap(int firstIndex, int secondIndex)
         {
-            value.Swap(firstIndex, secondIndex);
-            NotifyObserver(new ChangedArray<T>(value));
+            if (!IsIndexInRange(firstIndex) || !IsIndexInRange(secondIndex))
+                throw new IndexOutOfRangeException();
+
+            (values[firstIndex], values[secondIndex]) = (values[secondIndex], values[firstIndex]);
+            NotifyObserver(new ChangedArray<T>(values));
         }
 
-        public int IndexOfMin(int startIndex)
+        public int GetIndexOfMin(int startIndex = 0)
         {
+            if (!IsIndexInRange(startIndex))
+                throw new IndexOutOfRangeException();
+
             int result = startIndex;
-            for (var i = startIndex; i < value.Length; ++i)
+            for (var i = startIndex; i < values.Length; ++i)
             {
-                if (value[i].CompareTo(value[result]) < 0)
+                if (values[i].CompareTo(values[result]) < 0)
                 {
                     result = i;
                 }
             }
 
             return result;
+        }
+        private bool IsIndexInRange(int index)
+        {
+            return index >= 0 && index <= values.Length - 1;
         }
 
         public void RegisterObserver(IObserver observer)
@@ -62,14 +70,14 @@ namespace GreatSorter
         {
             get
             {
-                return value[index];
+                return values[index];
             }
         }
 
         public override string ToString()
         {
-            var strvalue = value.Select(x => x.ToString());
-            return String.Join(" ", strvalue);
+            var strValue = values.Select(x => x.ToString());
+            return string.Join(" ", strValue);
         }
     }
 

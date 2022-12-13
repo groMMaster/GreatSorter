@@ -35,7 +35,7 @@ namespace GreatSorter
             if (!IsIndexInRange(startIndex))
                 throw new IndexOutOfRangeException();
 
-            int result = startIndex;
+            var result = startIndex;
             for (var i = startIndex; i < values.Length; ++i)
             {
                 if (values[i].CompareTo(values[result]) < 0)

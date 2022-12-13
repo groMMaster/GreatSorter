@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class SelectionSort<T> : ISortAlgoritm<T>
+    public class SelectionSort<T> : ISortAlgorithm<T>
         where T : IComparable
     {
         public SortableArray<T> Sort(SortableArray<T> array)
@@ -16,7 +16,7 @@ namespace GreatSorter
         {
             if (currentIndex == array.Length)
                 return array;
-            var minIndex = array.IndexOfMin(currentIndex);
+            var minIndex = array.GetIndexOfMin(currentIndex);
             if (minIndex != currentIndex)
             {
                 array.Swap(minIndex, currentIndex);

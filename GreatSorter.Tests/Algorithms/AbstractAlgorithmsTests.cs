@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using GreatSorter;
 
 namespace GreatSorter.Tests.Algorithms
 {

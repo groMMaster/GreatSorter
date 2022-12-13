@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class StoogeSort<T> : ISortAlgoritm<T>
+    public class StoogeSort<T> : ISortAlgorithm<T>
         where T : IComparable
     {
         public SortableArray<T> Sort(SortableArray<T> array)

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public interface ISortAlgoritm<T>
+    public interface ISortAlgorithm<T>
         where T: IComparable
     {
         SortableArray<T> Sort(SortableArray<T> array);

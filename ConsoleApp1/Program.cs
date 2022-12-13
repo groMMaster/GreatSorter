@@ -7,12 +7,5 @@ namespace ConsoleApp1
 {
     static class Program
     {
-        static void Main(string[] args)
-        {
-            var a = new int[] { 3, 2, 5, 0, 10};
-            var sorter = new HandlerSort<int>();
-            var real = sorter.Sorter;
-            sorter.Start(a, new QuickSort<int>());
-        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GreatSorter
 {
-    public class BubbleSort<T> : ISortAlgoritm<T>
+    public class BubbleSort<T> : ISortAlgorithm<T>
         where T: IComparable
     {
         public SortableArray<T> Sort(SortableArray<T> array)

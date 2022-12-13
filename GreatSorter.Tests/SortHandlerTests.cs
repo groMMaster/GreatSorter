@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FakeItEasy;
 using NUnit.Framework;
+using GreatSorter;
 
 namespace GreatSorter.Tests
 {

@@ -45,7 +45,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(400, 300);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // pictureBox2
             // 
@@ -54,11 +53,16 @@
             this.pictureBox2.Size = new System.Drawing.Size(400, 300);
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Сортировка пузырьком",
+            "Гномья сортировка",
+            "Быстрая сортировка",
+            "Сортировка выбором",
+            "Сортировка по частям"});
             this.comboBox1.Location = new System.Drawing.Point(50, 425);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(400, 23);
@@ -67,6 +71,12 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "Сортировка пузырьком",
+            "Гномья сортировка",
+            "Быстрая сортировка",
+            "Сортировка выбором",
+            "Сортировка по частям"});
             this.comboBox2.Location = new System.Drawing.Point(500, 425);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(400, 23);

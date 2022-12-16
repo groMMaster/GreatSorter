@@ -34,8 +34,10 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -58,29 +60,31 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "Сортировка пузырьком",
-            "Гномья сортировка",
-            "Быстрая сортировка",
-            "Сортировка выбором",
-            "Сортировка по частям"});
+            "Bubble Sort",
+            "Gnome Sort",
+            "Quick Sort",
+            "Selection Sort",
+            "Stooge Sort"});
             this.comboBox1.Location = new System.Drawing.Point(50, 425);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(400, 23);
             this.comboBox1.TabIndex = 2;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
-            "Сортировка пузырьком",
-            "Гномья сортировка",
-            "Быстрая сортировка",
-            "Сортировка выбором",
-            "Сортировка по частям"});
+            "Bubble Sort",
+            "Gnome Sort",
+            "Quick Sort",
+            "Selection Sort",
+            "Stooge Sort"});
             this.comboBox2.Location = new System.Drawing.Point(500, 425);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(400, 23);
             this.comboBox2.TabIndex = 3;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -96,19 +100,33 @@
             // button1
             // 
             this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button1.Location = new System.Drawing.Point(372, 477);
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(500, 463);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(200, 45);
+            this.button1.Size = new System.Drawing.Size(400, 45);
             this.button1.TabIndex = 5;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(50, 463);
+            this.trackBar1.Maximum = 75;
+            this.trackBar1.Minimum = 10;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(400, 45);
+            this.trackBar1.SmallChange = 5;
+            this.trackBar1.TabIndex = 6;
+            this.trackBar1.TickFrequency = 5;
+            this.trackBar1.Value = 10;
             // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 561);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox2);
@@ -119,7 +137,9 @@
             this.Text = "Меню";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -131,5 +151,6 @@
         private ComboBox comboBox2;
         private Label label1;
         private Button button1;
+        private TrackBar trackBar1;
     }
 }

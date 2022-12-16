@@ -4,25 +4,27 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class SelectionSort<T> : ISortAlgorithm<T>
+    public class SelectionSort<T> : SortAlgorithm<T>
         where T : IComparable
     {
-        public SortableArray<T> Sort(SortableArray<T> array)
+        public SelectionSort(T[] array) : base(array) { }
+
+        public override void Sort()
         {
-            return Sort(array, 0);
+            Sort(0);
         }
 
-        private SortableArray<T> Sort(SortableArray<T> array, int currentIndex)
+        private void Sort(int currentIndex)
         {
-            if (currentIndex == array.Length)
-                return array;
-            var minIndex = array.GetIndexOfMin(currentIndex);
+            if (currentIndex == SortableArray.Length)
+                return;
+            var minIndex = SortableArray.GetIndexOfMin(currentIndex);
             if (minIndex != currentIndex)
             {
-                array.Swap(minIndex, currentIndex);
+                SortableArray.Swap(minIndex, currentIndex);
             }
 
-            return Sort(array, ++currentIndex);
+            Sort(++currentIndex);
         }
     }
 }

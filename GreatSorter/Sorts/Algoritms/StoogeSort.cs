@@ -4,30 +4,30 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class StoogeSort<T> : ISortAlgorithm<T>
+    public class StoogeSort<T> : SortAlgorithm<T>
         where T : IComparable
     {
-        public SortableArray<T> Sort(SortableArray<T> array)
+        public StoogeSort(T[] array) : base(array) { }
+
+        public override void Sort()
         {
-            return Sort(array, 0, array.Length - 1);
+            Sort(0, SortableArray.Length - 1);
         }
 
-        private SortableArray<T> Sort(SortableArray<T> array, int startIndex, int endIndex)
+        private void Sort(int startIndex, int endIndex)
         {
-            if (array[startIndex].CompareTo(array[endIndex]) > 0)
+            if (SortableArray[startIndex].CompareTo(SortableArray[endIndex]) > 0)
             {
-                array.Swap(startIndex, endIndex);
+                SortableArray.Swap(startIndex, endIndex);
             }
 
             if (endIndex - startIndex > 1)
             {
                 var len = (endIndex - startIndex + 1) / 3;
-                Sort(array, startIndex, endIndex - len);
-                Sort(array, startIndex + len, endIndex);
-                Sort(array, startIndex, endIndex - len);
+                Sort(startIndex, endIndex - len);
+                Sort(startIndex + len, endIndex);
+                Sort(startIndex, endIndex - len);
             }
-
-            return array;
         }
     }
 }

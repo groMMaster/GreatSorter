@@ -4,26 +4,28 @@ using System.Text;
 
 namespace GreatSorter
 {
-    public class QuickSort<T> : ISortAlgorithm<T>
+    public class QuickSort<T> : SortAlgorithm<T>
         where T: IComparable
     {
-        public SortableArray<T> Sort(SortableArray<T> array)
+        public QuickSort(T[] array) : base(array) { }
+
+        public override void Sort()
         {
-            return Sort(array, 0, array.Length - 1);
+            Sort(0, SortableArray.Length - 1);
         }
 
-        public SortableArray<T> Sort(SortableArray<T> array, int minIndex, int maxIndex)
+        public SortableArray<T> Sort(int minIndex, int maxIndex)
         {
             if (minIndex >= maxIndex)
             {
-                return array;
+                return SortableArray;
             }
 
-            var pivotIndex = Partition(array, minIndex, maxIndex);
-            Sort(array, minIndex, pivotIndex - 1);
-            Sort(array, pivotIndex + 1, maxIndex);
+            var pivotIndex = Partition(SortableArray, minIndex, maxIndex);
+            Sort(minIndex, pivotIndex - 1);
+            Sort(pivotIndex + 1, maxIndex);
 
-            return array;
+            return SortableArray;
         }
 
         private int Partition(SortableArray<T> array, int minIndex, int maxIndex)

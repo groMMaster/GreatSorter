@@ -3,23 +3,23 @@ using System.Collections.Generic;
 
 namespace GreatSorter
 {
-    public class BubbleSort<T> : ISortAlgorithm<T>
+    public class BubbleSort<T> : SortAlgorithm<T>
         where T: IComparable
     {
-        public SortableArray<T> Sort(SortableArray<T> array)
+        public BubbleSort(T[] array) : base(array) { }
+
+        public override void Sort()
         {
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < SortableArray.Length; i++)
             {
-                for (int j = i + 1; j < array.Length; j++)
+                for (int j = i + 1; j < SortableArray.Length; j++)
                 {
-                    if (array[i].CompareTo(array[j]) > 0)
+                    if (SortableArray[i].CompareTo(SortableArray[j]) > 0)
                     {
-                        array.Swap(i, j);
+                        SortableArray.Swap(i, j);
                     }
                 }
             }
-
-            return array;
         }
     }
 }

@@ -30,10 +30,10 @@ namespace WinFormsApp1
             g.Clear(Color.White);
             Pen pen = new Pen(Color.Black, widthPen);
 
-            var x = 15;
-            var stepX = (int)((width - widthPen * count) / (count + 1));
+            var x = count / 2;
+            var stepX = (width - widthPen * count) / (count + 1);
             var y1 = height - 50;
-            var yE = (int)((height - 100) / count);
+            var yE = (height - 100) / count;
 
             foreach (var e in array)
             {
@@ -46,7 +46,7 @@ namespace WinFormsApp1
                 x += widthPen;
             }
             
-            Thread.Sleep(10);
+            Thread.Sleep(100);
         }
 
         public void Update(object sender, object eventData)

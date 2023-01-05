@@ -30,9 +30,8 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            //this.comboBox1 = new System.Windows.Forms.ComboBox();
+            //this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -47,6 +46,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(400, 300);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // pictureBox2
             // 
@@ -58,49 +58,38 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Bubble Sort",
-            "Gnome Sort",
-            "Quick Sort",
-            "Selection Sort",
-            "Stooge Sort"});
-            this.comboBox1.Location = new System.Drawing.Point(50, 425);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(400, 23);
-            this.comboBox1.TabIndex = 2;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            //this.comboBox1.FormattingEnabled = true;
+            //this.comboBox1.Items.AddRange(new object[] {
+            //"Bubble Sort",
+            //"Gnome Sort",
+            //"Quick Sort",
+            //"Selection Sort",
+            //"Stooge Sort"});
+            //this.comboBox1.Location = new System.Drawing.Point(50, 425);
+            //this.comboBox1.Name = "comboBox1";
+            //this.comboBox1.Size = new System.Drawing.Size(400, 23);
+            //this.comboBox1.TabIndex = 2;
+            //this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // comboBox2
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "Bubble Sort",
-            "Gnome Sort",
-            "Quick Sort",
-            "Selection Sort",
-            "Stooge Sort"});
-            this.comboBox2.Location = new System.Drawing.Point(500, 425);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(400, 23);
-            this.comboBox2.TabIndex = 3;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(944, 100);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Сравнение сортировок";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            //this.comboBox2.FormattingEnabled = true;
+            //this.comboBox2.Items.AddRange(new object[] {
+            //"Bubble Sort",
+            //"Gnome Sort",
+            //"Quick Sort",
+            //"Selection Sort",
+            //"Stooge Sort"});
+            //this.comboBox2.Location = new System.Drawing.Point(500, 425);
+            //this.comboBox2.Name = "comboBox2";
+            //this.comboBox2.Size = new System.Drawing.Size(400, 23);
+            //this.comboBox2.TabIndex = 3;
+            //this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // button1
             // 
             this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button1.Enabled = false;
+            this.button1.Enabled = true;
             this.button1.Location = new System.Drawing.Point(500, 463);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(400, 45);
@@ -128,13 +117,13 @@
             this.ClientSize = new System.Drawing.Size(944, 561);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
+            //this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Name = "StartForm";
             this.Text = "Меню";
+            this.Load += new System.EventHandler(this.StartForm_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
@@ -147,9 +136,8 @@
 
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
-        private ComboBox comboBox1;
-        private ComboBox comboBox2;
-        private Label label1;
+        //private ComboBox comboBox1;
+        //private ComboBox comboBox2;
         private Button button1;
         private TrackBar trackBar1;
     }

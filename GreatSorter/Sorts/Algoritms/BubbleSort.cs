@@ -6,7 +6,10 @@ namespace GreatSorter
     public class BubbleSort<T> : SortAlgorithm<T>
         where T: IComparable
     {
-        public BubbleSort(T[] array) : base(array) { }
+        public BubbleSort(T[] array) : base(array) 
+        {
+            Name = "Bubble Sort";
+        }
 
         public override void Sort()
         {

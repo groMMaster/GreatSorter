@@ -7,8 +7,10 @@ namespace GreatSorter
     public class StoogeSort<T> : SortAlgorithm<T>
         where T : IComparable
     {
-        public StoogeSort(T[] array) : base(array) { }
-
+        public StoogeSort(T[] array) : base(array)
+        {
+            Name = "Stooge Sort";
+        }
         public override void Sort()
         {
             Sort(0, SortableArray.Length - 1);

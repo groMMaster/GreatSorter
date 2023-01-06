@@ -7,7 +7,10 @@ namespace GreatSorter
     public class GnomeSort<T> : SortAlgorithm<T>
         where T: IComparable
     {
-        public GnomeSort(T[] array) : base(array) { }
+        public GnomeSort(T[] array) : base(array)
+        {
+            Name = "Gnome Sort";
+        }
 
         public override void Sort()
         {

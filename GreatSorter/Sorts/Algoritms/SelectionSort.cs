@@ -7,8 +7,10 @@ namespace GreatSorter
     public class SelectionSort<T> : SortAlgorithm<T>
         where T : IComparable
     {
-        public SelectionSort(T[] array) : base(array) { }
-
+        public SelectionSort(T[] array) : base(array)
+        {
+            Name = "Selection Sort";
+        }
         public override void Sort()
         {
             Sort(0);

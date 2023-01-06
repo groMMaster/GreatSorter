@@ -7,7 +7,10 @@ namespace GreatSorter
     public class QuickSort<T> : SortAlgorithm<T>
         where T: IComparable
     {
-        public QuickSort(T[] array) : base(array) { }
+        public QuickSort(T[] array) : base(array)
+        {
+            Name = "Quick Sort";
+        }
 
         public override void Sort()
         {

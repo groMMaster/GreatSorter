@@ -62,7 +62,6 @@ namespace WinFormsApp1
             var visualSecond = new Visualiser<int>(pictureBox2);
             sortSecond.SortableArray.RegisterObserver(visualSecond);
             
-            await ParallelSortExecutor<int>.Execute(sortFirst, sortSecond);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -94,37 +93,7 @@ namespace WinFormsApp1
 
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void StartForm_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void StartForm_Load_2(object sender, EventArgs e)
-        {
-
-        }
-
-        private void StartForm_Load_3(object sender, EventArgs e)
+        private void trackBar1_Enter(object sender, EventArgs e)
         {
 
         }

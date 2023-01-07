@@ -6,9 +6,9 @@ namespace MyForm
 {
     public partial class StartForm : Form
     {
-        public StartForm()
+        public StartForm(SortAlgorithm<int>[] sortAlgorithms)
         {
-            InitializeComponent();
+            InitializeComponent(sortAlgorithms);
         }
     }
 }

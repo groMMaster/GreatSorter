@@ -104,6 +104,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "StartForm";
             this.Text = "Меню";
+            this.Load += new System.EventHandler(this.StartForm_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();

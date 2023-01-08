@@ -38,7 +38,7 @@ namespace MyForm
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        private void InitializeComponent(SortAlgorithm<int>[] sortAlgorithms)
         {
             this.SuspendLayout();
 
@@ -100,7 +100,7 @@ namespace MyForm
             };
 
             firstSelectSortingType.SelectedValueChanged += (sender, args) => IsPossibleStart();
-            firstSelectSortingType.Items.AddRange(comboBoxItems);
+            firstSelectSortingType.Items.AddRange(sortAlgorithms);
 
             secondSelectSortingType = new ComboBox
             {
@@ -108,17 +108,17 @@ namespace MyForm
             };
 
             secondSelectSortingType.SelectedValueChanged += (sender, args) => IsPossibleStart();
-            secondSelectSortingType.Items.AddRange(comboBoxItems);
+            secondSelectSortingType.Items.AddRange(sortAlgorithms);
 
             sortSize = new TextBox
             {
-                Text = "Введите кол-во элементов для сортировки (min-10, max-100)",
+                Text = "Введите кол-во элементов для сортировки (min - 10, max - 100)",
                 Dock = DockStyle.Top
             };
 
             sortSize.Enter += (sender, args) =>
             {
-                if (sortSize.Text == "Введите кол-во элементов для сортировки (min-10, max-100)")
+                if (sortSize.Text == "Введите кол-во элементов для сортировки (min - 10, max - 100)")
                 {
                     sortSize.Text = "";
                 }
@@ -162,7 +162,7 @@ namespace MyForm
         {
             if (firstSelectSortingType.SelectedItem != null && secondSelectSortingType.SelectedItem != null)
             {
-                if (sortSize.Text != "Введите кол-во элементов для сортировки (min-10, max-100)")
+                if (sortSize.Text != "Введите кол-во элементов для сортировки (min - 10, max - 100)")
                 {
                     start.Enabled = true;
                 }
@@ -185,7 +185,7 @@ namespace MyForm
 
                 if (input < 10 || input > 100)
                 {
-                    SortSizeExeption("Число должно быть не меньше 10 и не больше 100");
+                    SortSizeExeption("Число должно быть от 10 до 100");
                 }
             }
             catch (Exception)
@@ -196,25 +196,28 @@ namespace MyForm
 
         private void SortSizeExeption(string message)
         {
-            MessageBox.Show(message);
-            sortSize.Text = "Введите кол-во элементов для сортировки (min-10, max-100)";
+            MessageBox.Show(message, "Ошибка при вводе размера", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            sortSize.Text = "Введите кол-во элементов для сортировки (min - 10, max - 100)";
         }
 
         private async void StartClick(object sender, EventArgs e)
         {
-            var first = new Visualiser(firstSortingPicture);
-            var second = new Visualiser(secondSortingPicture);
+            var firstVisualiser = new Visualiser(firstSortingPicture);
+            var secondVisualiser = new Visualiser(secondSortingPicture);
 
-            var one = RndArray.Get(int.Parse(sortSize.Text));
-            var another = RndArray.Get(int.Parse(sortSize.Text));
 
-            var a = SortingFactory.CreateSort((string)firstSelectSortingType.SelectedItem, one);
-            var b = SortingFactory.CreateSort((string)secondSelectSortingType.SelectedItem, another);
+            var firstSort = (SortAlgorithm<int>)firstSelectSortingType.SelectedItem;
+            var secondSort = (SortAlgorithm<int>)secondSelectSortingType.SelectedItem;
 
-            a.SortableArray.RegisterObserver(first);
-            b.SortableArray.RegisterObserver(second);
+            var randomArray = RndArray.Get(int.Parse(sortSize.Text));
 
-            await ParallelSortExecutor<int>.Execute(a, b);
+            firstSort.SetArray(randomArray);
+            secondSort.SetArray((int[])randomArray.Clone());
+
+            firstSort.SortableArray.RegisterObserver(firstVisualiser);
+            secondSort.SortableArray.RegisterObserver(secondVisualiser);
+
+            await ParallelSortExecutor<int>.Execute(firstSort, secondSort);
         }
     }
 

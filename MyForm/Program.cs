@@ -1,3 +1,6 @@
+using GreatSorter;
+using WinFormsApp1;
+
 namespace MyForm
 {
     internal static class Program
@@ -11,7 +14,7 @@ namespace MyForm
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new StartForm());
+            Application.Run(DIContainer.CreateStartForm());
         }
     }
 }

@@ -173,6 +173,7 @@ namespace MyForm
         {
             if (sortSize.Text == "")
             {
+                start.Enabled = false;
                 sortSize.Text = "Введите кол-во элементов для сортировки (min-10, max-100)";
                 return;
             }
@@ -219,48 +220,50 @@ namespace MyForm
 
     public class Visualiser : IObserver
     {
-        public PictureBox PictureBox;
-        private int width;
-        private int height;
+        private PictureBox pictureBox;
 
         public Visualiser(PictureBox pictureBox)
         {
-            PictureBox = pictureBox;
-            width = pictureBox.Width;
-            height = pictureBox.Height;
+            this.pictureBox = pictureBox;
         }
+
         public void Drawing(int[] array)
         {
+            var width = pictureBox.Width;
+            var height = pictureBox.Height;
             var count = array.Length;
-            var widthPen = 2;
+            var margin = 20;
+            var yHeight = (height - 2 * margin) / count;
 
+            var widthPen = 2;
             Pen pen = new Pen(Color.Black, widthPen);
 
-            var xHorizontalMargin = 20;
-            var stepX = (double)(width - 2 * xHorizontalMargin - widthPen * count) / (count - 1);
-            var remStepX = stepX - (int)stepX;
             var y1 = height - 20;
-            var yE = (height - 40) / count;
-            var x = xHorizontalMargin;
-            var sumRemStepX = 0.0;
 
-            PictureBox.Paint += (sender, args) =>
+            var stepX = (double)(width - 2 * margin - widthPen * count) / (count - 1);
+            var remStepX = stepX - (int)stepX;
+            var sumRemStepX = 0.0;
+            var f = true;
+
+            pictureBox.Paint += (sender, args) =>
             {
-                foreach (var e in array)
+                var x = margin;
+                args.Graphics.Clear(Color.White);
+                foreach(var e in array)
                 {
                     CalcRemStepX(ref sumRemStepX, ref x, remStepX);
-                    var y2 = y1 - yE * (int)(object)e;
+                    var y2 = y1 - yHeight * (int)(object)e;
 
                     var p1 = new Point(x, y1);
                     var p2 = new Point(x, y2);
 
+                    x += (int)stepX + widthPen;
+
                     args.Graphics.DrawLine(pen, p1, p2);
-                    x += (int)stepX;
-                    x += widthPen;
                 }
             };
 
-            PictureBox.Invalidate();
+            pictureBox.Invalidate();
             Thread.Sleep(100);
         }
 

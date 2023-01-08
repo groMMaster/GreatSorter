@@ -21,7 +21,7 @@ namespace WinFormsApp1
         public static StandardKernel ConfigureContainer()
         {
             var container = new StandardKernel();
-            var arr = RndArray.Get(8);
+            var arr = RndArray.Get(0);
 
             container.Bind<SortAlgorithm<int>>()
                 .To<BubbleSort<int>>();

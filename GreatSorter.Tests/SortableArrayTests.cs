@@ -71,5 +71,20 @@ namespace GreatSorter.Tests
         {
             Assert.Throws<IndexOutOfRangeException>(() => sortableArray.GetIndexOfMin(startIndex));
         }
+
+
+        [Test]
+        public void NotChangeEmptyArray()
+        {
+            var sortableArray = new SortableArray<int>();
+            Assert.AreEqual(Array.Empty<int>(), sortableArray.GetValues);
+        }
+
+        [Test]
+        public void NotChangeArrayWithOneElement()
+        {
+            var sortableArray = new SortableArray<int>(0);
+            Assert.AreEqual(new[] { 0 }, sortableArray.GetValues);
+        }
     }
 }

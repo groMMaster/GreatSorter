@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 
 namespace GreatSorter.Tests.Algorithms
 {
-    internal class SelectionSortTests : AbstractAlgorithmsTests
+    internal class GnomeSortTests : AbstractAlgorithmsTests
     {
         [Test]
         public void SortDefaultUnsortedArray()
         {
-            CheckCorrectSorting(defaultUnsortedArray, new SelectionSort<int>(cloneDefaultUnsortedArray));
+            CheckCorrectSorting(defaultUnsortedArray, new GnomeSort<int>(cloneDefaultUnsortedArray));
         }
 
         [Test]
         public void SortRandomUnsortedArray()
         {
+
             var rndArray = GetRandomArray(10, -100, 100);
             var cloneRndArray = (int[])rndArray.Clone();
             CheckCorrectSorting(rndArray, new SelectionSort<int>(cloneRndArray));
@@ -26,7 +27,7 @@ namespace GreatSorter.Tests.Algorithms
         [Test]
         public void ThrowExceptionIfArrayIsNull()
         {
-            Assert.Throws<NullReferenceException>(() => new SelectionSort<int>(null).Sort());
+            Assert.Throws<NullReferenceException>(() => new BubbleSort<int>(null).Sort());
         }
     }
 }

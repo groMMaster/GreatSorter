@@ -16,6 +16,8 @@ namespace MyForm
         private ComboBox secondSelectSortingType;
         private TableLayoutPanel table;
 
+        private const string textSortSize = "Введите кол-во элементов для сортировки (min - 10, max - 100)";
+
         public StartForm(SortAlgorithm<int>[] sortAlgorithms)
         {
             InitializeComponent(sortAlgorithms);
@@ -95,13 +97,13 @@ namespace MyForm
 
             sortSize = new TextBox
             {
-                Text = "Введите кол-во элементов для сортировки (min - 10, max - 100)",
+                Text = textSortSize,
                 Dock = DockStyle.Top
             };
 
             sortSize.Enter += (sender, args) =>
             {
-                if (sortSize.Text == "Введите кол-во элементов для сортировки (min - 10, max - 100)")
+                if (sortSize.Text == textSortSize)
                 {
                     sortSize.Text = "";
                 }
@@ -145,7 +147,7 @@ namespace MyForm
         {
             if (firstSelectSortingType.SelectedItem != null && secondSelectSortingType.SelectedItem != null)
             {
-                if (sortSize.Text != "Введите кол-во элементов для сортировки (min - 10, max - 100)")
+                if (sortSize.Text != textSortSize)
                 {
                     start.Enabled = true;
                 }
@@ -157,7 +159,7 @@ namespace MyForm
             if (sortSize.Text == "")
             {
                 start.Enabled = false;
-                sortSize.Text = "Введите кол-во элементов для сортировки (min-10, max-100)";
+                sortSize.Text = textSortSize;
                 return;
             }
 
@@ -180,7 +182,7 @@ namespace MyForm
         private void SortSizeExeption(string message)
         {
             MessageBox.Show(message, "Ошибка при вводе размера", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            sortSize.Text = "Введите кол-во элементов для сортировки (min - 10, max - 100)";
+            sortSize.Text = textSortSize;
         }
 
         private async void StartClick(object sender, EventArgs e)
@@ -192,7 +194,7 @@ namespace MyForm
             var firstSort = (SortAlgorithm<int>)firstSelectSortingType.SelectedItem;
             var secondSort = (SortAlgorithm<int>)secondSelectSortingType.SelectedItem;
 
-            var randomArray = RndArray.Get(int.Parse(sortSize.Text));
+            var randomArray = new Random().CreateArray(int.Parse(sortSize.Text));
 
             firstSort.SetArray(randomArray);
             secondSort.SetArray((int[])randomArray.Clone());
@@ -224,17 +226,16 @@ namespace MyForm
             var widthPen = 2;
             Pen pen = new Pen(Color.Black, widthPen);
 
+            var x = margin;
             var y1 = height - 20;
 
             var stepX = (double)(width - 2 * margin - widthPen * count) / (count - 1);
             var remStepX = stepX - (int)stepX;
             var sumRemStepX = 0.0;
-            var f = true;
-            Thread.Sleep(50);
+            
 
             pictureBox.Paint += (sender, args) =>
             {
-                var x = margin;
                 args.Graphics.Clear(Color.White);
                 foreach (var e in array)
                 {
@@ -245,14 +246,13 @@ namespace MyForm
                     var p2 = new Point(x, y2);
 
                     x += (int)stepX + widthPen;
-
                     args.Graphics.DrawLine(pen, p1, p2);
                 }
 
             };
 
             pictureBox.Invalidate();
-            
+            Thread.Sleep(50);
         }
 
         public void Update(object sender, object eventData)

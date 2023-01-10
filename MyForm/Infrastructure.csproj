@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -10,11 +10,11 @@
 
   <ItemGroup>
     <PackageReference Include="Ninject" Version="3.3.6" />
-    <PackageReference Include="ninject.extensions.conventions" Version="3.3.0" />
+    <PackageReference Include="Ninject.Extensions.Conventions" Version="3.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GreatSorter\GreatSorter.csproj" />
+    <ProjectReference Include="..\GreatSorter\App.csproj" />
   </ItemGroup>
 
 </Project>

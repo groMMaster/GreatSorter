@@ -7,26 +7,27 @@ using System.Threading.Tasks;
 
 namespace GreatSorter.Tests.Algorithms
 {
-    internal class SelectionSortTests : AbstractAlgorithmsTests
+    internal class QuickSortTests : AbstractAlgorithmsTests
     {
         [Test]
         public void SortDefaultUnsortedArray()
         {
-            CheckCorrectSorting(defaultUnsortedArray, new SelectionSort<int>(cloneDefaultUnsortedArray));
+            CheckCorrectSorting(defaultUnsortedArray, new QuickSort<int>(cloneDefaultUnsortedArray));
         }
 
         [Test]
         public void SortRandomUnsortedArray()
         {
+
             var rndArray = GetRandomArray(10, -100, 100);
             var cloneRndArray = (int[])rndArray.Clone();
-            CheckCorrectSorting(rndArray, new SelectionSort<int>(cloneRndArray));
+            CheckCorrectSorting(rndArray, new QuickSort<int>(cloneRndArray));
         }
 
         [Test]
         public void ThrowExceptionIfArrayIsNull()
         {
-            Assert.Throws<NullReferenceException>(() => new SelectionSort<int>(null).Sort());
+            Assert.Throws<NullReferenceException>(() => new QuickSort<int>(null).Sort());
         }
     }
 }

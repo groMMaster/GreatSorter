@@ -12,33 +12,22 @@ namespace GreatSorter.Tests.Algorithms
         [Test]
         public void SortDefaultUnsortedArray()
         {
-            CheckCorrectSorting(defaultUnsortedArray, new BubbleSort<int>());
+            CheckCorrectSorting(defaultUnsortedArray, new BubbleSort<int>(cloneDefaultUnsortedArray));
         }
 
         [Test]
         public void SortRandomUnsortedArray()
         {
-            CheckCorrectSorting(GetRandomArray(10, -100, 100), new BubbleSort<int>());
-        }
 
-        [Test]
-        public void NotChangeEmptyArray()
-        {
-            var sortableArray = new SortableArray<int>();
-            Assert.AreEqual(Array.Empty<int>(), sortableArray.GetValues);
-        }
-
-        [Test]
-        public void NotChangeArrayWithOneElement()
-        {
-            var sortableArray = new SortableArray<int>(0);
-            Assert.AreEqual(new [] { 0 }, sortableArray.GetValues);
+            var rndArray = GetRandomArray(10, -100, 100);
+            var cloneRndArray = (int[])rndArray.Clone();
+            CheckCorrectSorting(rndArray, new BubbleSort<int>(cloneRndArray));
         }
 
         [Test]
         public void ThrowExceptionIfArrayIsNull()
         {
-            Assert.Throws<NullReferenceException>(() => new BubbleSort<int>().Sort(null));
+            Assert.Throws<NullReferenceException>(() => new BubbleSort<int>(null).Sort());
         }
     }
 }

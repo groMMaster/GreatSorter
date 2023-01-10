@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Drawing;
 using System.Linq;
 
 namespace GreatSorter
 {
-    public class RndArray
+    public static class RandomExtensions
     {
-        public static int[] Get(int lenght)
+        public static int[] CreateArray(this Random random, int lenght)
         {
             var array = Enumerable.Range(1, lenght).ToArray();
-            Random random = new Random();
             return array.OrderBy(x => random.Next()).ToArray();
         }
     }

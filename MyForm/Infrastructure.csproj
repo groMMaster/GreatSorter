@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GreatSorter\GreatSorter.csproj" />
+    <ProjectReference Include="..\GreatSorter\App.csproj" />
   </ItemGroup>
 
 </Project>

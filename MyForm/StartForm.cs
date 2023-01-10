@@ -6,17 +6,88 @@ namespace MyForm
 {
     public partial class StartForm : Form
     {
-        private TextBox sortSize;
-        private Label textSelectSortingType;
-        private Button start;
-        private Button getLog;
-        private PictureBox firstSortingPicture;
-        private PictureBox secondSortingPicture;
-        private ComboBox firstSelectSortingType;
-        private ComboBox secondSelectSortingType;
-        private TableLayoutPanel table;
+        private TableLayoutPanel table = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            Margin = new Padding(5),
+            BackColor = Color.WhiteSmoke,
+        };
 
-        private const string textSortSize = "Введите кол-во элементов для сортировки (min - 10, max - 100)";
+        private TableLayoutPanel picters = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            Margin = new Padding(5),
+            BackColor = Color.WhiteSmoke,
+        };
+
+        private TableLayoutPanel parameters = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            BackColor = Color.WhiteSmoke,
+            CellBorderStyle = TableLayoutPanelCellBorderStyle.Single
+        };
+
+        private PictureBox firstPicture = new PictureBox
+        {
+            Dock = DockStyle.Top,
+            Size = new Size(400, 400),
+            BackColor = Color.White
+        };
+
+        private PictureBox secondPicture = new PictureBox
+        {
+            Dock = DockStyle.Top,
+            Size = new Size(400, 400),
+            BackColor = Color.White
+        };
+
+        private Label firstPictureName = new Label
+        {
+            Text = "",
+            Font = new Font("Arial", 12),
+            Dock = DockStyle.Bottom
+        };
+
+        private Label secondPictureName = new Label
+        {
+            Text = "",
+            Font = new Font("Arial", 12),
+            Dock = DockStyle.Bottom
+        };
+
+        private ComboBox firstSelectSortingType = new ComboBox
+        {
+            Dock = DockStyle.Top
+        };
+
+        private ComboBox secondSelectSortingType = new ComboBox
+        {
+            Dock = DockStyle.Top,
+        };
+
+        private TextBox sortSize = new TextBox
+        {
+            Dock = DockStyle.Top,
+            Text = textSortSize,
+        };
+
+        private Button start = new Button
+        {
+            Dock = DockStyle.Top,
+            Size = new Size(380, 50),
+            Text = "Пуск",
+            Enabled = false,
+        };
+
+        private Button log = new Button
+        {
+            Dock = DockStyle.Top,
+            Size = new Size(380, 50),
+            Text = "Загрузить журнал",
+            Enabled = false
+        };
+
+        private const string textSortSize = "min 10 - max 50";
 
         public StartForm(SortAlgorithm<int>[] sortAlgorithms)
         {
@@ -27,80 +98,71 @@ namespace MyForm
         {
             this.SuspendLayout();
 
-            Size = new Size(960, 600);
+            Size = new Size(1280, 720);
+            
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             DoubleBuffered = true;
 
-            textSelectSortingType = new Label
+            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 500));
+            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 820));
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 380));
+
+            table.Controls.Add(picters, 0, 0);
+            table.Controls.Add(parameters, 1, 0);
+
+            picters.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+            picters.RowStyles.Add(new RowStyle(SizeType.Absolute, 400));
+
+            picters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 410));
+            picters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 410));
+
+            picters.Controls.Add(firstPictureName, 0, 0);
+            picters.Controls.Add(secondPictureName, 1, 0);
+
+            picters.Controls.Add(firstPicture, 0, 1);
+            picters.Controls.Add(secondPicture, 1, 1);
+
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 300));
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+
+            parameters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 380));
+
+            parameters.Controls.Add(new Label
             {
+                Dock = DockStyle.Bottom,
                 Text = "Выберите сортировки, которые хотите сравнить",
-                Font = new Font("Arial", 13, FontStyle.Bold, GraphicsUnit.Point),
-                Dock = DockStyle.Bottom
-            };
+                Font = new Font("Arial", 12)
+            });
 
-            start = new Button
-            {
-                Size = new Size(150, 37),
-                Text = "Пуск",
-                Dock = DockStyle.Top,
-                Enabled = false
-            };
+            parameters.Controls.Add(firstSelectSortingType);
+            parameters.Controls.Add(secondSelectSortingType);
 
-            start.Click += new EventHandler(StartClick);
-
-            getLog = new Button
-            {
-                Size = new Size(150, 37),
-                Text = "Загрузить журнал сортировки",
-                Dock = DockStyle.Top,
-                Enabled = false
-            };
-
-            firstSortingPicture = new PictureBox
-            {
-                Size = new Size(360, 225),
-                BackColor = Color.White,
-                Dock = DockStyle.Top,
-
-            };
-
-            secondSortingPicture = new PictureBox
-            {
-                Size = new Size(360, 225),
-                BackColor = Color.White,
-                Dock = DockStyle.Top
-            };
-
-            var comboBoxItems = new string[] {
-            "Bubble Sort",
-            "Gnome Sort",
-            "Quick Sort",
-            "Selection Sort",
-            "Stooge Sort"};
-
-            firstSelectSortingType = new ComboBox
-            {
-                Dock = DockStyle.Fill
-            };
-
-            firstSelectSortingType.SelectedValueChanged += (sender, args) => IsPossibleStart();
             firstSelectSortingType.Items.AddRange(sortAlgorithms);
-
-            secondSelectSortingType = new ComboBox
-            {
-                Dock = DockStyle.Fill
-            };
-
-            secondSelectSortingType.SelectedValueChanged += (sender, args) => IsPossibleStart();
             secondSelectSortingType.Items.AddRange(sortAlgorithms);
 
-            sortSize = new TextBox
-            {
-                Text = textSortSize,
-                Dock = DockStyle.Top
-            };
+            firstSelectSortingType.SelectedValueChanged += (sender, args) => IsPossibleStart();
+            secondSelectSortingType.SelectedValueChanged += (sender, args) => IsPossibleStart();
 
+            parameters.Controls.Add(new Label
+            {
+                Dock = DockStyle.Bottom,
+                Text = "Введите кол-во элементов для сортировки",
+                Font = new Font("Arial", 12)
+            });
+
+            parameters.Controls.Add(sortSize, 0, 4);
+
+            sortSize.Leave += (sender, args) => IsPossibleStart();
+            sortSize.Leave += (sender, args) => TextBoxLeave();
             sortSize.Enter += (sender, args) =>
             {
                 if (sortSize.Text == textSortSize)
@@ -109,34 +171,10 @@ namespace MyForm
                 }
             };
 
-            sortSize.Leave += (sender, args) => IsPossibleStart();
-            sortSize.Leave += new EventHandler(textBox_Leave);
+            table.Controls.Add(start, 1, 1);
+            table.Controls.Add(log, 1, 2);
 
-            table = new TableLayoutPanel();
-            table.RowStyles.Clear();
-            table.Dock = DockStyle.Fill;
-
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 70));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 70));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 280));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
-
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-
-            table.Controls.Add(textSelectSortingType, 0, 0);
-
-            table.Controls.Add(firstSelectSortingType, 0, 1);
-            table.Controls.Add(secondSelectSortingType, 1, 1);
-
-            table.Controls.Add(firstSortingPicture, 0, 2);
-            table.Controls.Add(secondSortingPicture, 1, 2);
-
-            table.Controls.Add(sortSize, 1, 3);
-            table.Controls.Add(start, 1, 4);
-            table.Controls.Add(getLog, 0, 4);
-
+            start.Click += (sender, args) => StartClick();
 
             Controls.Add(table);
             PerformLayout();
@@ -154,7 +192,7 @@ namespace MyForm
             }
         }
 
-        private void textBox_Leave(object sender, EventArgs e)
+        private void TextBoxLeave()
         {
             if (sortSize.Text == "")
             {
@@ -168,9 +206,9 @@ namespace MyForm
             {
                 input = int.Parse(sortSize.Text);
 
-                if (input < 10 || input > 100)
+                if (input < 10 || input > 50)
                 {
-                    SortSizeExeption("Число должно быть от 10 до 100");
+                    SortSizeExeption("Число должно быть от 10 до 50");
                 }
             }
             catch (Exception)
@@ -185,11 +223,15 @@ namespace MyForm
             sortSize.Text = textSortSize;
         }
 
-        private async void StartClick(object sender, EventArgs e)
+        private async void StartClick()
         {
-            var firstVisualiser = new Visualiser(firstSortingPicture);
-            var secondVisualiser = new Visualiser(secondSortingPicture);
+            start.Enabled = false;
 
+            firstPictureName.Text = firstSelectSortingType.SelectedItem.ToString();
+            secondPictureName.Text = secondSelectSortingType.SelectedItem.ToString();
+
+            var firstVisualiser = new Visualiser(firstPicture);
+            var secondVisualiser = new Visualiser(secondPicture);
 
             var firstSort = (SortAlgorithm<int>)firstSelectSortingType.SelectedItem;
             var secondSort = (SortAlgorithm<int>)secondSelectSortingType.SelectedItem;
@@ -203,83 +245,7 @@ namespace MyForm
             secondSort.SortableArray.RegisterObserver(secondVisualiser);
 
             await ParallelSortExecutor<int>.Execute(firstSort, secondSort);
-        }
-    }
-
-    public class Visualiser : IObserver
-    {
-        private PictureBox pictureBox;
-
-        public Visualiser(PictureBox pictureBox)
-        {
-            this.pictureBox = pictureBox;
-        }
-
-        public void Drawing(int[] array)
-        {
-            var width = pictureBox.Width;
-            var height = pictureBox.Height;
-            var count = array.Length;
-            var margin = 20;
-            var yHeight = (height - 2 * margin) / count;
-
-            var widthPen = 2;
-            Pen pen = new Pen(Color.Black, widthPen);
-
-            var x = margin;
-            var y1 = height - 20;
-
-            var stepX = (double)(width - 2 * margin - widthPen * count) / (count - 1);
-            var remStepX = stepX - (int)stepX;
-            var sumRemStepX = 0.0;
-            
-
-            pictureBox.Paint += (sender, args) =>
-            {
-                args.Graphics.Clear(Color.White);
-                foreach (var e in array)
-                {
-                    CalcRemStepX(ref sumRemStepX, ref x, remStepX);
-                    var y2 = y1 - yHeight * (int)(object)e;
-
-                    var p1 = new Point(x, y1);
-                    var p2 = new Point(x, y2);
-
-                    x += (int)stepX + widthPen;
-                    args.Graphics.DrawLine(pen, p1, p2);
-                }
-
-            };
-
-            pictureBox.Invalidate();
-            Thread.Sleep(50);
-        }
-
-        public void Update(object sender, object eventData)
-        {
-            Drawing(((ChangedArray<int>)eventData).Value);
-        }
-
-        private void CalcRemStepX(ref double sumRemStepX, ref int x, double remStepX)
-        {
-            if (sumRemStepX < 2)
-            {
-                sumRemStepX += remStepX;
-            }
-            else
-            {
-                sumRemStepX -= 2;
-                x += 2;
-            }
-            if (sumRemStepX < 1)
-            {
-                sumRemStepX += remStepX;
-            }
-            else
-            {
-                sumRemStepX--;
-                x++;
-            }
+            start.Enabled = true;
         }
     }
 }

@@ -71,6 +71,11 @@ namespace MyForm
             Text = textSortSize,
         };
 
+        private ComboBox speed = new ComboBox
+        {
+            Dock = DockStyle.Top,
+        };
+
         private Button start = new Button
         {
             Dock = DockStyle.Top,
@@ -104,6 +109,7 @@ namespace MyForm
             MaximizeBox = false;
             DoubleBuffered = true;
 
+            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, 500));
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
@@ -111,8 +117,24 @@ namespace MyForm
             table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 820));
             table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 380));
 
-            table.Controls.Add(picters, 0, 0);
-            table.Controls.Add(parameters, 1, 0);
+            table.Controls.Add(new Label
+            {
+                Dock = DockStyle.Bottom,
+                Text = "Экран домонстрации",
+                Font = new Font("Arial", 12, FontStyle.Bold)
+            },
+            0, 0);
+
+            table.Controls.Add(new Label
+            {
+                Dock = DockStyle.Bottom,
+                Text = "Параметры",
+                Font = new Font("Arial", 12, FontStyle.Bold)
+            },
+            1, 0);
+
+            table.Controls.Add(picters, 0, 1);
+            table.Controls.Add(parameters, 1, 1);
 
             picters.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
             picters.RowStyles.Add(new RowStyle(SizeType.Absolute, 400));
@@ -130,9 +152,9 @@ namespace MyForm
             parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
             parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
             parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 300));
-            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
-            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
 
             parameters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 380));
 
@@ -149,6 +171,9 @@ namespace MyForm
             firstSelectSortingType.Items.AddRange(sortAlgorithms);
             secondSelectSortingType.Items.AddRange(sortAlgorithms);
 
+            firstSelectSortingType.DropDownStyle = ComboBoxStyle.DropDownList;
+            secondSelectSortingType.DropDownStyle = ComboBoxStyle.DropDownList;
+
             firstSelectSortingType.SelectedValueChanged += (sender, args) => IsPossibleStart();
             secondSelectSortingType.SelectedValueChanged += (sender, args) => IsPossibleStart();
 
@@ -159,7 +184,7 @@ namespace MyForm
                 Font = new Font("Arial", 12)
             });
 
-            parameters.Controls.Add(sortSize, 0, 4);
+            parameters.Controls.Add(sortSize);
 
             sortSize.Leave += (sender, args) => IsPossibleStart();
             sortSize.Leave += (sender, args) => TextBoxLeave();
@@ -171,8 +196,26 @@ namespace MyForm
                 }
             };
 
-            table.Controls.Add(start, 1, 1);
-            table.Controls.Add(log, 1, 2);
+            parameters.Controls.Add(new Label
+            {
+                Dock = DockStyle.Bottom,
+                Text = "Выберите скорость сортировки",
+                Font = new Font("Arial", 12)
+            });
+
+            parameters.Controls.Add(speed);
+            speed.Items.AddRange(new string[]
+            {
+                "Медленно",
+                "По умолчанию",
+                "Быстро"
+            });
+
+            speed.SelectedItem = "По умолчанию";
+            speed.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            table.Controls.Add(start, 1, 2);
+            table.Controls.Add(log, 1, 3);
 
             start.Click += (sender, args) => StartClick();
 
@@ -227,11 +270,11 @@ namespace MyForm
         {
             start.Enabled = false;
 
-            firstPictureName.Text = firstSelectSortingType.SelectedItem.ToString();
-            secondPictureName.Text = secondSelectSortingType.SelectedItem.ToString();
+            firstPictureName.Text = firstSelectSortingType.Text;
+            secondPictureName.Text = secondSelectSortingType.Text;
 
-            var firstVisualiser = new Visualiser(firstPicture);
-            var secondVisualiser = new Visualiser(secondPicture);
+            var firstVisualiser = new Visualiser(firstPicture, speed.Text);
+            var secondVisualiser = new Visualiser(secondPicture, speed.Text);
 
             var firstSort = (SortAlgorithm<int>)firstSelectSortingType.SelectedItem;
             var secondSort = (SortAlgorithm<int>)secondSelectSortingType.SelectedItem;

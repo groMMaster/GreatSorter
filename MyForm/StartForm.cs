@@ -1,30 +1,48 @@
 using GreatSorter;
 using System.Diagnostics.Metrics;
 using System.Drawing;
+using System.Windows.Forms;
+using System.Threading;
+using System.Diagnostics;
 
 namespace MyForm
 {
     public partial class StartForm : Form
     {
-        private TableLayoutPanel table = new TableLayoutPanel
+        private TableLayoutPanel body = new TableLayoutPanel
         {
             Dock = DockStyle.Fill,
-            Margin = new Padding(5),
-            BackColor = Color.WhiteSmoke,
+            BackColor = Color.WhiteSmoke
+        };
+
+        private TableLayoutPanel menu = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            BackColor = Color.WhiteSmoke
         };
 
         private TableLayoutPanel picters = new TableLayoutPanel
         {
             Dock = DockStyle.Fill,
-            Margin = new Padding(5),
-            BackColor = Color.WhiteSmoke,
+            BackColor = Color.WhiteSmoke
+        };
+
+        private TableLayoutPanel bottom = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            BackColor = Color.WhiteSmoke
         };
 
         private TableLayoutPanel parameters = new TableLayoutPanel
         {
             Dock = DockStyle.Fill,
-            BackColor = Color.WhiteSmoke,
-            CellBorderStyle = TableLayoutPanelCellBorderStyle.Single
+            BackColor = Color.WhiteSmoke
+        };
+
+        private TableLayoutPanel actions = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            BackColor = Color.WhiteSmoke
         };
 
         private PictureBox firstPicture = new PictureBox
@@ -41,58 +59,46 @@ namespace MyForm
             BackColor = Color.White
         };
 
-        private Label firstPictureName = new Label
-        {
-            Text = "",
-            Font = new Font("Arial", 12),
-            Dock = DockStyle.Bottom
-        };
-
-        private Label secondPictureName = new Label
-        {
-            Text = "",
-            Font = new Font("Arial", 12),
-            Dock = DockStyle.Bottom
-        };
-
         private ComboBox firstSelectSortingType = new ComboBox
         {
-            Dock = DockStyle.Top
+            Dock = DockStyle.Bottom
         };
 
         private ComboBox secondSelectSortingType = new ComboBox
         {
-            Dock = DockStyle.Top,
+            Dock = DockStyle.Bottom
         };
 
-        private TextBox sortSize = new TextBox
+        private NumericUpDown size = new NumericUpDown
         {
             Dock = DockStyle.Top,
-            Text = textSortSize,
         };
 
         private ComboBox speed = new ComboBox
         {
-            Dock = DockStyle.Top,
+            Dock = DockStyle.Top
         };
 
         private Button start = new Button
         {
-            Dock = DockStyle.Top,
-            Size = new Size(380, 50),
+            Dock = DockStyle.Fill,
             Text = "Пуск",
-            Enabled = false,
+            Enabled = false
+        };
+
+        private Button stop = new Button
+        {
+            Dock = DockStyle.Fill,
+            Text = "Прервать",
+            Enabled = false
         };
 
         private Button log = new Button
         {
-            Dock = DockStyle.Top,
-            Size = new Size(380, 50),
+            Dock = DockStyle.Fill,
             Text = "Загрузить журнал",
             Enabled = false
         };
-
-        private const string textSortSize = "min 10 - max 50";
 
         public StartForm(SortAlgorithm<int>[] sortAlgorithms)
         {
@@ -103,107 +109,105 @@ namespace MyForm
         {
             this.SuspendLayout();
 
-            Size = new Size(1280, 720);
+            Size = new Size(1080, 720);
             
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            MinimizeBox= false;
             MaximizeBox = false;
             DoubleBuffered = true;
 
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 500));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+            body.RowStyles.Add(new RowStyle(SizeType.Absolute, 100));
+            body.RowStyles.Add(new RowStyle(SizeType.Absolute, 450));
+            body.RowStyles.Add(new RowStyle(SizeType.Absolute, 120));
 
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 820));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 380));
+            body.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 1050));
 
-            table.Controls.Add(new Label
+            body.Controls.Add(menu);
+
+            body.RowStyles.Add(new RowStyle(SizeType.Absolute, 540));
+            body.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 1050));
+
+            menu.Controls.Add(new Label
             {
                 Dock = DockStyle.Bottom,
-                Text = "Экран домонстрации",
-                Font = new Font("Arial", 12, FontStyle.Bold)
-            },
-            0, 0);
-
-            table.Controls.Add(new Label
-            {
-                Dock = DockStyle.Bottom,
-                Text = "Параметры",
-                Font = new Font("Arial", 12, FontStyle.Bold)
-            },
-            1, 0);
-
-            table.Controls.Add(picters, 0, 1);
-            table.Controls.Add(parameters, 1, 1);
-
-            picters.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
-            picters.RowStyles.Add(new RowStyle(SizeType.Absolute, 400));
-
-            picters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 410));
-            picters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 410));
-
-            picters.Controls.Add(firstPictureName, 0, 0);
-            picters.Controls.Add(secondPictureName, 1, 0);
-
-            picters.Controls.Add(firstPicture, 0, 1);
-            picters.Controls.Add(secondPicture, 1, 1);
-
-            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
-            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
-            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-
-            parameters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 380));
-
-            parameters.Controls.Add(new Label
-            {
-                Dock = DockStyle.Bottom,
-                Text = "Выберите сортировки, которые хотите сравнить",
-                Font = new Font("Arial", 12)
+                Text = "Сравнение сортировок",
+                Font = new Font("Arial", 14, FontStyle.Bold)
             });
 
-            parameters.Controls.Add(firstSelectSortingType);
-            parameters.Controls.Add(secondSelectSortingType);
+            body.Controls.Add(picters);
+
+            picters.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+            picters.RowStyles.Add(new RowStyle(SizeType.Absolute, 400));
+
+            picters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 525));
+            picters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 525));
+
+            picters.Controls.Add(firstSelectSortingType, 0, 0);
+            picters.Controls.Add(secondSelectSortingType, 1, 0);
 
             firstSelectSortingType.Items.AddRange(sortAlgorithms);
             secondSelectSortingType.Items.AddRange(sortAlgorithms);
 
+            firstSelectSortingType.SelectedItem = sortAlgorithms[0];
+            secondSelectSortingType.SelectedItem = sortAlgorithms[1];
+
             firstSelectSortingType.DropDownStyle = ComboBoxStyle.DropDownList;
             secondSelectSortingType.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            firstSelectSortingType.SelectedValueChanged += (sender, args) => IsPossibleStart();
-            secondSelectSortingType.SelectedValueChanged += (sender, args) => IsPossibleStart();
+            picters.Controls.Add(firstPicture, 0, 1);
+            picters.Controls.Add(secondPicture, 1, 1);
+
+            body.Controls.Add(bottom);
+
+            bottom.RowStyles.Add(new RowStyle(SizeType.Absolute, 120));
+
+            bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 525));
+            bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 525));
+
+            bottom.Controls.Add(parameters, 0, 0);
+            bottom.Controls.Add(actions, 1, 0);
+
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
+            parameters.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
+
+            parameters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 300));
+            parameters.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200));
 
             parameters.Controls.Add(new Label
             {
-                Dock = DockStyle.Bottom,
-                Text = "Введите кол-во элементов для сортировки",
+                Dock = DockStyle.Fill,
+                Text = "Кол-во элементов для сортировки \n(min 10, max 50)",
                 Font = new Font("Arial", 12)
-            });
+            },
+            0, 0);
 
-            parameters.Controls.Add(sortSize);
+            parameters.Controls.Add(size, 1, 0);
 
-            sortSize.Leave += (sender, args) => IsPossibleStart();
-            sortSize.Leave += (sender, args) => TextBoxLeave();
-            sortSize.Enter += (sender, args) =>
+            size.Value = 10;
+
+            size.Leave += (sender, args) =>
             {
-                if (sortSize.Text == textSortSize)
+                var input = size.Value;
+                if (input < 10 || input > 50)
                 {
-                    sortSize.Text = "";
+                    MessageBox.Show(
+                        "Не меньше 10, не больше 50",
+                        "Ошибка при вводе размера",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    size.Value = 10;
                 }
             };
 
             parameters.Controls.Add(new Label
             {
-                Dock = DockStyle.Bottom,
+                Dock = DockStyle.Top,
                 Text = "Выберите скорость сортировки",
                 Font = new Font("Arial", 12)
-            });
+            }, 
+            0, 1);
 
-            parameters.Controls.Add(speed);
+            parameters.Controls.Add(speed, 1, 1);
             speed.Items.AddRange(new string[]
             {
                 "Медленно",
@@ -214,64 +218,29 @@ namespace MyForm
             speed.SelectedItem = "По умолчанию";
             speed.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            table.Controls.Add(start, 1, 2);
-            table.Controls.Add(log, 1, 3);
+            actions.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
+            actions.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
+            actions.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
+
+            actions.Controls.Add(start);
+            actions.Controls.Add(stop);
+            actions.Controls.Add(log);
 
             start.Click += (sender, args) => StartClick();
+            stop.Click += (sender, args) =>
+            {
 
-            Controls.Add(table);
+            };
+
+            Controls.Add(body);
             PerformLayout();
             ResumeLayout(false);
-        }
-
-        private void IsPossibleStart()
-        {
-            if (firstSelectSortingType.SelectedItem != null && secondSelectSortingType.SelectedItem != null)
-            {
-                if (sortSize.Text != textSortSize)
-                {
-                    start.Enabled = true;
-                }
-            }
-        }
-
-        private void TextBoxLeave()
-        {
-            if (sortSize.Text == "")
-            {
-                start.Enabled = false;
-                sortSize.Text = textSortSize;
-                return;
-            }
-
-            int input;
-            try
-            {
-                input = int.Parse(sortSize.Text);
-
-                if (input < 10 || input > 50)
-                {
-                    SortSizeExeption("Число должно быть от 10 до 50");
-                }
-            }
-            catch (Exception)
-            {
-                SortSizeExeption("Введите число");
-            }
-        }
-
-        private void SortSizeExeption(string message)
-        {
-            MessageBox.Show(message, "Ошибка при вводе размера", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            sortSize.Text = textSortSize;
         }
 
         private async void StartClick()
         {
             start.Enabled = false;
-
-            firstPictureName.Text = firstSelectSortingType.Text;
-            secondPictureName.Text = secondSelectSortingType.Text;
+            stop.Enabled = true;
 
             var firstVisualiser = new Visualiser(firstPicture, speed.Text);
             var secondVisualiser = new Visualiser(secondPicture, speed.Text);
@@ -279,7 +248,7 @@ namespace MyForm
             var firstSort = (SortAlgorithm<int>)firstSelectSortingType.SelectedItem;
             var secondSort = (SortAlgorithm<int>)secondSelectSortingType.SelectedItem;
 
-            var randomArray = new Random().CreateArray(int.Parse(sortSize.Text));
+            var randomArray = new Random().CreateArray(int.Parse(size.Text));
 
             firstSort.SetArray(randomArray);
             secondSort.SetArray((int[])randomArray.Clone());
@@ -288,7 +257,9 @@ namespace MyForm
             secondSort.SortableArray.RegisterObserver(secondVisualiser);
 
             await ParallelSortExecutor<int>.Execute(firstSort, secondSort);
+
             start.Enabled = true;
+            stop.Enabled = false;
         }
     }
 }

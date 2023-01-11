@@ -1,4 +1,5 @@
-﻿using GreatSorter;
+﻿using FakeItEasy.Sdk;
+using GreatSorter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace MyForm
     public class Visualiser : IObserver
     {
         private PictureBox pictureBox;
+        private int delay;
 
-        public Visualiser(PictureBox pictureBox)
+        public Visualiser(PictureBox pictureBox, string speed)
         {
             this.pictureBox = pictureBox;
+            delay = CreateDelay(speed);
         }
 
         public void Drawing(int[] array)
@@ -53,7 +56,7 @@ namespace MyForm
             };
 
             pictureBox.Invalidate();
-            Thread.Sleep(50);
+            Thread.Sleep(delay);
         }
 
         public void Update(object sender, object eventData)
@@ -81,6 +84,21 @@ namespace MyForm
                 sumRemStepX--;
                 x++;
             }
+        }
+
+        private int CreateDelay(string speed)
+        {
+            switch (speed)
+            {
+                case "Медленно":
+                    return 150;
+                case "По умолчанию":
+                    return 100;
+                case "Быстро":
+                    return 50;
+            }
+
+            throw new ArgumentException(String.Format("This speed type: {0} does not exist", speed));
         }
     }
 }

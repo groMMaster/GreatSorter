@@ -72,6 +72,10 @@ namespace MyForm
         private NumericUpDown size = new NumericUpDown
         {
             Dock = DockStyle.Top,
+            Value = 10,
+            Increment = 5,
+            Maximum = 50,
+            Minimum = 10
         };
 
         private ComboBox speed = new ComboBox
@@ -83,7 +87,6 @@ namespace MyForm
         {
             Dock = DockStyle.Fill,
             Text = "Пуск",
-            Enabled = false
         };
 
         private Button stop = new Button
@@ -183,21 +186,7 @@ namespace MyForm
 
             parameters.Controls.Add(size, 1, 0);
 
-            size.Value = 10;
-
-            size.Leave += (sender, args) =>
-            {
-                var input = size.Value;
-                if (input < 10 || input > 50)
-                {
-                    MessageBox.Show(
-                        "Не меньше 10, не больше 50",
-                        "Ошибка при вводе размера",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-                    size.Value = 10;
-                }
-            };
+            
 
             parameters.Controls.Add(new Label
             {

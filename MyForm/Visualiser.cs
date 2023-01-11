@@ -37,7 +37,6 @@ namespace MyForm
             var remStepX = stepX - (int)stepX;
             var sumRemStepX = 0.0;
 
-
             pictureBox.Paint += (sender, args) =>
             {
                 args.Graphics.Clear(Color.White);
@@ -52,7 +51,6 @@ namespace MyForm
                     x += (int)stepX + widthPen;
                     args.Graphics.DrawLine(pen, p1, p2);
                 }
-
             };
 
             pictureBox.Invalidate();

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace MyForm
 {
-    public class Visualiser : IObserver
+    public class Visualizer
     {
         private PictureBox pictureBox;
         private int delay;
 
-        public Visualiser(PictureBox pictureBox, string speed)
+        public Visualizer(PictureBox pictureBox, string speed)
         {
             this.pictureBox = pictureBox;
             delay = CreateDelay(speed);
@@ -37,6 +37,8 @@ namespace MyForm
             var remStepX = stepX - (int)stepX;
             var sumRemStepX = 0.0;
 
+            //pictureBox.Invalidate();
+
             pictureBox.Paint += (sender, args) =>
             {
                 args.Graphics.Clear(Color.White);
@@ -51,16 +53,19 @@ namespace MyForm
                     x += (int)stepX + widthPen;
                     args.Graphics.DrawLine(pen, p1, p2);
                 }
+                
             };
 
+            //Thread.Sleep(10);
             pictureBox.Invalidate();
-            Thread.Sleep(delay);
+            //pictureBox.Update();
+            
         }
 
-        public void Update(object sender, object eventData)
-        {
-            Drawing(((ChangedArray<int>)eventData).Value);
-        }
+        //public void Update(object sender, object eventData)
+        //{
+        //    Drawing(((ChangedArray<int>)eventData).Value);
+        //}
 
         private void CalcRemStepX(ref double sumRemStepX, ref int x, double remStepX)
         {

@@ -1,13 +1,16 @@
+using System.ComponentModel.Design;
 using GreatSorter;
 using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
+using Timer = System.Threading.Timer;
 
 namespace MyForm
 {
-    public partial class StartForm : Form
+    public class StartForm : Form
     {
         private TableLayoutPanel body = new TableLayoutPanel
         {
@@ -188,7 +191,7 @@ namespace MyForm
             size.Leave += (sender, args) =>
             {
                 var input = size.Value;
-                if (input < 10 || input > 50)
+                if (input < 10 || input > 101)
                 {
                     MessageBox.Show(
                         "Не меньше 10, не больше 50",
@@ -229,37 +232,84 @@ namespace MyForm
             start.Click += (sender, args) => StartClick();
             stop.Click += (sender, args) =>
             {
-
+                timer.Stop();
             };
 
             Controls.Add(body);
             PerformLayout();
             ResumeLayout(false);
+
+            start.Enabled = true;
+            stop.Enabled = true;
         }
+
+
+        private System.Windows.Forms.Timer timer = new();
 
         private async void StartClick()
         {
-            start.Enabled = false;
-            stop.Enabled = true;
+            //start.Enabled = false;
+            //stop.Enabled = true;
 
-            var firstVisualiser = new Visualiser(firstPicture, speed.Text);
-            var secondVisualiser = new Visualiser(secondPicture, speed.Text);
+            
+            var firstVisualiser = new Visualizer(firstPicture, speed.Text);
+            var secondVisualiser = new Visualizer(secondPicture, speed.Text);
 
             var firstSort = (SortAlgorithm<int>)firstSelectSortingType.SelectedItem;
             var secondSort = (SortAlgorithm<int>)secondSelectSortingType.SelectedItem;
 
             var randomArray = new Random().CreateArray(int.Parse(size.Text));
 
+
+            var firstLogger = new SortLogger<int>((int[])randomArray.Clone());
+            var secondLogger = new SortLogger<int>((int[])randomArray.Clone());
+
             firstSort.SetArray(randomArray);
             secondSort.SetArray((int[])randomArray.Clone());
 
-            firstSort.SortableArray.RegisterObserver(firstVisualiser);
-            secondSort.SortableArray.RegisterObserver(secondVisualiser);
+            firstSort.SortableArray.RegisterObserver(firstLogger);
+            secondSort.SortableArray.RegisterObserver(secondLogger);
 
-            await ParallelSortExecutor<int>.Execute(firstSort, secondSort);
+            firstSort.Sort();
+            secondSort.Sort();
+            //foreach (var log in firstLogger.GetLogs())
+            //{
+            //    firstVisualiser.Drawing(log);
+            //    await Task.Delay(50);
+            //}
 
-            start.Enabled = true;
-            stop.Enabled = false;
+            //secondSort.SortableArray.RegisterObserver(secondVisualiser);
+
+            //await ParallelLogVisualizer<int>.Execute(firstLogger, firstVisualiser, secondLogger, secondVisualiser);
+
+            //var timer = new System.Windows.Forms.Timer();
+            int time = 0;
+            var arrayStates = firstLogger.GetAllArrayStates();
+            var arrayStates2 = secondLogger.GetAllArrayStates();
+            timer.Interval = 10;
+
+            timer.Tick += (sender, args) =>
+            {
+               if (time < arrayStates.Count)
+               {
+                    firstVisualiser.Drawing(arrayStates[time]);
+                    secondVisualiser.Drawing(arrayStates2[time]);
+               }
+
+              time++;
+            };
+
+            timer.Start();
+
+            //for (var i = 0; i < arrayStates.Count; i++)
+            //{
+            //    var cur = arrayStates[i];
+            //    firstVisualiser.Drawing(arrayStates[i]);
+            //    await Task.Delay(100);
+            //}
+
+            //start.Enabled = true;
+            //stop.Enabled = false;
         }
     }
 }

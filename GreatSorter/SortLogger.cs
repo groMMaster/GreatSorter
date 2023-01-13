@@ -22,7 +22,7 @@ namespace GreatSorter
             logs.Add((SwapIndexes)eventData);
         }
 
-        public IEnumerable<T[]> GetLogs()
+        public IEnumerable<T[]> GetNext()
         {
             yield return start;
 
@@ -39,7 +39,7 @@ namespace GreatSorter
             var result = new List<T[]>();
 
             //var array = (T[])start.Clone();
-            foreach (var log in GetLogs())
+            foreach (var log in GetNext())
             {
                 result.Add((T[])log.Clone());
             }

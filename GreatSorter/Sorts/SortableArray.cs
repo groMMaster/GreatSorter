@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 
 namespace GreatSorter
 {
@@ -27,7 +25,7 @@ namespace GreatSorter
                 throw new IndexOutOfRangeException();
 
             (values[firstIndex], values[secondIndex]) = (values[secondIndex], values[firstIndex]);
-            NotifyObserver(new ChangedArray<T>(values));
+            NotifyObserver(new SwapIndexes(firstIndex, secondIndex));
         }
 
         public int GetIndexOfMin(int startIndex = 0)
@@ -66,13 +64,7 @@ namespace GreatSorter
             observers -= observer.Update;
         }
 
-        public T this[int index]
-        {
-            get
-            {
-                return values[index];
-            }
-        }
+        public T this[int index] => values[index];
 
         public override string ToString()
         {
@@ -81,13 +73,16 @@ namespace GreatSorter
         }
     }
 
-    public class ChangedArray<T> : EventArgs
+    public class SwapIndexes : EventArgs
     {
-        public T[] Value;
+        public int First { get; }
+        public int Second { get; }
 
-        public ChangedArray(T[] value)
+        public SwapIndexes(int first, int second)
         {
-            Value = value;
+            First = first;
+            Second = second;
         }
     }
+
 }

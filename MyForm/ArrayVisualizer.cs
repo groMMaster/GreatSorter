@@ -1,25 +1,15 @@
-﻿using FakeItEasy.Sdk;
-using GreatSorter;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyForm
+﻿namespace MyForm
 {
-    public class Visualiser : IObserver
+    public class ArrayVisualizer
     {
         private PictureBox pictureBox;
-        private int delay;
 
-        public Visualiser(PictureBox pictureBox, string speed)
+        public ArrayVisualizer(PictureBox pictureBox)
         {
             this.pictureBox = pictureBox;
-            delay = CreateDelay(speed);
         }
 
-        public void Drawing(int[] array)
+        public void Draw(int[] array)
         {
             var width = pictureBox.Width;
             var height = pictureBox.Height;
@@ -54,12 +44,6 @@ namespace MyForm
             };
 
             pictureBox.Invalidate();
-            Thread.Sleep(delay);
-        }
-
-        public void Update(object sender, object eventData)
-        {
-            Drawing(((ChangedArray<int>)eventData).Value);
         }
 
         private void CalcRemStepX(ref double sumRemStepX, ref int x, double remStepX)
@@ -82,21 +66,6 @@ namespace MyForm
                 sumRemStepX--;
                 x++;
             }
-        }
-
-        private int CreateDelay(string speed)
-        {
-            switch (speed)
-            {
-                case "Медленно":
-                    return 150;
-                case "По умолчанию":
-                    return 100;
-                case "Быстро":
-                    return 50;
-            }
-
-            throw new ArgumentException(String.Format("This speed type: {0} does not exist", speed));
         }
     }
 }

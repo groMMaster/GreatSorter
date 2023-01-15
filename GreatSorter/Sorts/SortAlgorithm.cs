@@ -9,7 +9,7 @@ namespace GreatSorter
         public string Name { get; private set; }
         public SortableArray<T> SortableArray { get; private set; }
 
-        public SortAlgorithm(T[] array)
+        protected SortAlgorithm(T[] array)
         {
             SortableArray = new SortableArray<T>(array);
             SetName();
@@ -30,6 +30,6 @@ namespace GreatSorter
 
         public abstract void Sort();
 
-        public override string ToString() { return Name; }
+        public override string ToString() => "Name";
     }
 }

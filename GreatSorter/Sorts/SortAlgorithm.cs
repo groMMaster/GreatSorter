@@ -7,17 +7,10 @@ namespace GreatSorter
         where T : IComparable
     {
         public string Name { get; private set; }
-        public SortableArray<T> SortableArray { get; private set; }
 
-        protected SortAlgorithm(T[] array)
+        protected SortAlgorithm()
         {
-            SortableArray = new SortableArray<T>(array);
             SetName();
-        }
-
-        public void SetArray(T[] array)
-        {
-            SortableArray = new SortableArray<T>(array);
         }
 
         private void SetName()
@@ -28,6 +21,11 @@ namespace GreatSorter
             Name = nameWithSpaces.Substring(0, nameWithSpaces.Length - 2);
         }
 
-        public abstract void Sort();
+        public SortableArray<T> Sort(T[] array)
+        {
+            return Sort(new SortableArray<T>(array));
+        }
+
+        protected abstract SortableArray<T> Sort(SortableArray<T> array);
     }
 }

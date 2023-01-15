@@ -5,20 +5,20 @@ namespace GreatSorter
     public class BubbleSort<T> : SortAlgorithm<T>
         where T: IComparable
     {
-        public BubbleSort(T[] array) : base(array) { }
-
-        public override void Sort()
+        protected override SortableArray<T> Sort(SortableArray<T> array)
         {
-            for (int i = 0; i < SortableArray.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                for (int j = i + 1; j < SortableArray.Length; j++)
+                for (int j = i + 1; j < array.Length; j++)
                 {
-                    if (SortableArray[i].CompareTo(SortableArray[j]) > 0)
+                    if (array[i].CompareTo(array[j]) > 0)
                     {
-                        SortableArray.Swap(i, j);
+                        array.Swap(i, j);
                     }
                 }
             }
+
+            return array;
         }
     }
 }

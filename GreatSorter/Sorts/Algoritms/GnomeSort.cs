@@ -5,23 +5,21 @@ namespace GreatSorter
     public class GnomeSort<T> : SortAlgorithm<T>
         where T: IComparable
     {
-        public GnomeSort(T[] array) : base(array) { }
-
-        public override void Sort()
+        protected override SortableArray<T> Sort(SortableArray<T> array)
         {
             var index = 1;
             var nextIndex = index + 1;
 
-            while (index < SortableArray.Length)
+            while (index < array.Length)
             {
-                if (SortableArray[index - 1].CompareTo(SortableArray[index]) < 0)
+                if (array[index - 1].CompareTo(array[index]) < 0)
                 {
                     index = nextIndex;
                     nextIndex++;
                 }
                 else
                 {
-                    SortableArray.Swap(index - 1, index);
+                    array.Swap(index - 1, index);
                     index--;
                     if (index == 0)
                     {
@@ -29,6 +27,8 @@ namespace GreatSorter
                     }
                 }
             }
+            
+            return array;
         }
     }
 }

@@ -5,23 +5,23 @@ namespace GreatSorter
     public class SelectionSort<T> : SortAlgorithm<T>
         where T : IComparable
     {
-        public SelectionSort(T[] array) : base(array) { }
-        public override void Sort()
+        protected override SortableArray<T> Sort(SortableArray<T> array)
         {
-            Sort(0);
+            Sort(array, 0);
+            return array;
         }
 
-        private void Sort(int currentIndex)
+        private void Sort(SortableArray<T> array, int currentIndex)
         {
-            if (currentIndex == SortableArray.Length)
+            if (currentIndex == array.Length)
                 return;
-            var minIndex = SortableArray.GetIndexOfMin(currentIndex);
+            var minIndex = array.GetIndexOfMin(currentIndex);
             if (minIndex != currentIndex)
             {
-                SortableArray.Swap(minIndex, currentIndex);
+                array.Swap(minIndex, currentIndex);
             }
 
-            Sort(++currentIndex);
+            Sort(array, ++currentIndex);
         }
     }
 }

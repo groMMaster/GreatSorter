@@ -7,25 +7,23 @@ namespace GreatSorter
     public class QuickSort<T> : SortAlgorithm<T>
         where T: IComparable
     {
-        public QuickSort(T[] array) : base(array) { }
-
-        public override void Sort()
+        protected override SortableArray<T> Sort(SortableArray<T> array)
         {
-            Sort(0, SortableArray.Length - 1);
+            return Sort(array, 0, 0);
         }
 
-        public SortableArray<T> Sort(int minIndex, int maxIndex)
+        public SortableArray<T> Sort(SortableArray<T> array, int minIndex, int maxIndex)
         {
             if (minIndex >= maxIndex)
             {
-                return SortableArray;
+                return array;
             }
 
-            var pivotIndex = Partition(SortableArray, minIndex, maxIndex);
-            Sort(minIndex, pivotIndex - 1);
-            Sort(pivotIndex + 1, maxIndex);
+            var pivotIndex = Partition(array, minIndex, maxIndex);
+            Sort(array, minIndex, pivotIndex - 1);
+            Sort(array, pivotIndex + 1, maxIndex);
 
-            return SortableArray;
+            return array;
         }
 
         private int Partition(SortableArray<T> array, int minIndex, int maxIndex)

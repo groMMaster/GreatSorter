@@ -5,26 +5,25 @@ namespace GreatSorter
     public class StoogeSort<T> : SortAlgorithm<T>
         where T : IComparable
     {
-        public StoogeSort(T[] array) : base(array) { }
-
-        public override void Sort()
+        protected override SortableArray<T> Sort(SortableArray<T> array)
         {
-            Sort(0, SortableArray.Length - 1);
+            Sort(array, 0, array.Length - 1);
+            return array;
         }
 
-        private void Sort(int startIndex, int endIndex)
+        private void Sort(SortableArray<T> array, int startIndex, int endIndex)
         {
-            if (SortableArray[startIndex].CompareTo(SortableArray[endIndex]) > 0)
+            if (array[startIndex].CompareTo(array[endIndex]) > 0)
             {
-                SortableArray.Swap(startIndex, endIndex);
+                array.Swap(startIndex, endIndex);
             }
 
             if (endIndex - startIndex > 1)
             {
                 var len = (endIndex - startIndex + 1) / 3;
-                Sort(startIndex, endIndex - len);
-                Sort(startIndex + len, endIndex);
-                Sort(startIndex, endIndex - len);
+                Sort(array, startIndex, endIndex - len);
+                Sort(array, startIndex + len, endIndex);
+                Sort(array, startIndex, endIndex - len);
             }
         }
     }

@@ -9,7 +9,7 @@ namespace GreatSorter
     {
         protected override SortableArray<T> Sort(SortableArray<T> array)
         {
-            Sort(array, 0, 0);
+            Sort(array, 0, array.Length - 1);
             return array;
         }
 

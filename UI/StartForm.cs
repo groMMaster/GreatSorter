@@ -100,8 +100,8 @@ namespace MyForm
         };
 
         private Timer timer;
-        private ArrayVisualizer firstArrayVisualizer;
-        private ArrayVisualizer secondArrayVisualizer;
+        private IVisualizer firstArrayVisualizer;
+        private IVisualizer secondArrayVisualizer;
 
         public StartForm(SortAlgorithm<int>[] sortAlgorithms)
         {

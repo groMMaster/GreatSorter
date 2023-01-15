@@ -1,6 +1,6 @@
 ﻿namespace MyForm
 {
-    public class ArrayVisualizer
+    public class ArrayVisualizer : IVisualizer
     {
         private PictureBox pictureBox;
 

@@ -5,17 +5,17 @@ using System.Linq;
 namespace GreatSorter
 {
     public class SortLogger<T> : IObserver
+        where T : IComparable
     {
         public int Count => logs.Count;
 
         private T[] start;
-        public List<SwapIndexes> logs;
-        public T[] curArrayState;
-        private int currentLogIndex;
+        private List<SwapIndexes> logs;
 
-        public SortLogger(T[] start)
+        public SortLogger(SortableArray<T> sortableArray)
         {
-            this.start = start;
+            start = sortableArray.GetValues.ToArray();
+            sortableArray.RegisterObserver(this);
             logs = new List<SwapIndexes>();
         }
 
@@ -24,7 +24,7 @@ namespace GreatSorter
             logs.Add((SwapIndexes)eventData);
         }
 
-        public IEnumerable<T[]> GetLogs()
+        private IEnumerable<T[]> CreateLog()
         {
             yield return start;
 
@@ -36,32 +36,13 @@ namespace GreatSorter
             }
         }
 
-        public T[] GetNext()
+        public Queue<T[]> GetLog()
         {
-            if (currentLogIndex > logs.Count - 1)
+            var result = new Queue<T[]>();
+
+            foreach (var e in CreateLog())
             {
-                throw new IndexOutOfRangeException();
-            }
-
-            if (currentLogIndex == 0)
-            {
-                curArrayState = (T[])start.Clone();
-            }
-
-            var curLog = logs[currentLogIndex];
-            (curArrayState[curLog.First], curArrayState[curLog.Second]) = (curArrayState[curLog.Second], curArrayState[curLog.First]);
-            currentLogIndex++;
-
-            return curArrayState;
-        }
-
-        public List<T[]> GetAllArrayStates()
-        {
-            var result = new List<T[]>();
-
-            foreach (var log in GetLogs())
-            {
-                result.Add((T[])log.Clone());
+                result.Enqueue((T[])e.Clone());
             }
 
             return result;
@@ -69,7 +50,7 @@ namespace GreatSorter
 
         public override string ToString()
         {
-            var result = GetLogs().Select(x => String.Join(", ", x));
+            var result = GetLog().Select(x => String.Join(", ", x));
             return String.Join("\n", result);
         }
     }

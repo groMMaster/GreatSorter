@@ -8,6 +8,7 @@ namespace GreatSorter
         where T : IComparable
     {
         private T[] values;
+        public SortLogger<T> Logger { get; private set; }
 
         public ReadOnlyCollection<T> GetValues => Array.AsReadOnly(values);
         public int Length => values.Length;
@@ -16,7 +17,9 @@ namespace GreatSorter
 
         public SortableArray(params T[] values)
         {
+            if (values == null) throw new NullReferenceException();
             this.values = values;
+            Logger = new SortLogger<T>(this);
         }
 
         public void Swap(int firstIndex, int secondIndex)
@@ -84,5 +87,4 @@ namespace GreatSorter
             Second = second;
         }
     }
-
 }

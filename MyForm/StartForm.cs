@@ -1,4 +1,4 @@
-using GreatSorter;
+п»їusing GreatSorter;
 using Timer = System.Windows.Forms.Timer;
 
 namespace MyForm
@@ -82,20 +82,20 @@ namespace MyForm
         private Button start = new()
         {
             Dock = DockStyle.Fill,
-            Text = "Пуск",
+            Text = "РџСѓСЃРє",
         };
 
         private Button stop = new()
         {
             Dock = DockStyle.Fill,
-            Text = "Прервать",
+            Text = "РџСЂРµСЂРІР°С‚СЊ",
             Enabled = false
         };
 
         private Button log = new()
         {
             Dock = DockStyle.Fill,
-            Text = "Загрузить журнал",
+            Text = "Р—Р°РіСЂСѓР·РёС‚СЊ Р¶СѓСЂРЅР°Р»",
             Enabled = false
         };
 
@@ -115,9 +115,9 @@ namespace MyForm
 
             var speedByDelay = new Dictionary<int, string>()
             {
-                {100, "Медленно"},
-                {defaultDelay, "По умолчанию"},
-                {10, "Быстро"},
+                {100, "РњРµРґР»РµРЅРЅРѕ"},
+                {defaultDelay, "РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ"},
+                {10, "Р‘С‹СЃС‚СЂРѕ"},
             };
 
             delay.DataSource = new BindingSource(speedByDelay, null);
@@ -152,7 +152,7 @@ namespace MyForm
             menu.Controls.Add(new Label
             {
                 Dock = DockStyle.Bottom,
-                Text = "Сравнение сортировок",
+                Text = "РЎСЂР°РІРЅРµРЅРёРµ СЃРѕСЂС‚РёСЂРѕРІРѕРє",
                 Font = new Font("Arial", 14, FontStyle.Bold)
             });
 
@@ -201,7 +201,7 @@ namespace MyForm
             parameters.Controls.Add(new Label
             {
                 Dock = DockStyle.Fill,
-                Text = "Кол-во элементов для сортировки \n(min 10, max 50)",
+                Text = "РљРѕР»-РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё \n(min 10, max 50)",
                 Font = new Font("Arial", 12)
             },
             0, 0);
@@ -211,7 +211,7 @@ namespace MyForm
             parameters.Controls.Add(new Label
             {
                 Dock = DockStyle.Top,
-                Text = "Выберите скорость сортировки",
+                Text = "Р’С‹Р±РµСЂРёС‚Рµ СЃРєРѕСЂРѕСЃС‚СЊ СЃРѕСЂС‚РёСЂРѕРІРєРё",
                 Font = new Font("Arial", 12)
             },
             0, 1);
@@ -256,35 +256,32 @@ namespace MyForm
 
             var randomArray = new Random().CreateArray(int.Parse(size.Text));
 
-            var firstLogger = new SortLogger<int>((int[])randomArray.Clone());
-            var secondLogger = new SortLogger<int>((int[])randomArray.Clone());
-
             firstSort.SetArray(randomArray);
             secondSort.SetArray((int[])randomArray.Clone());
 
-            firstSort.SortableArray.RegisterObserver(firstLogger);
-            secondSort.SortableArray.RegisterObserver(secondLogger);
-
             firstSort.Sort();
             secondSort.Sort();
+
+            var firstLog = firstSort.SortableArray.Logger.GetLog();
+            var secondLog = secondSort.SortableArray.Logger.GetLog();
 
             int tickCount = 0;
             timer.Interval = selectedDelay;
             timer.Tick += (sender, args) =>
             {
                 tickCount++;
-
-                if (tickCount < firstLogger.Count + 1)
+                int[] e;
+                if (firstLog.TryDequeue(out e))
                 {
-                    firstArrayVisualizer.Draw(firstLogger.GetNext());
+                    firstArrayVisualizer.Draw(e);
                 }
 
-                if (tickCount < secondLogger.Count + 1)
+                if (secondLog.TryDequeue(out e))
                 {
-                    secondArrayVisualizer.Draw(secondLogger.GetNext());
+                    secondArrayVisualizer.Draw(e);
                 }
 
-                if (tickCount > firstLogger.Count && tickCount > secondLogger.Count)
+                if (firstLog.Count == 0 && secondLog.Count == 0)
                 {
                     stop.Enabled = false;
                     start.Enabled = true;

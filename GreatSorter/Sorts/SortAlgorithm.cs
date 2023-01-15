@@ -29,7 +29,5 @@ namespace GreatSorter
         }
 
         public abstract void Sort();
-
-        public override string ToString() => "Name";
     }
 }

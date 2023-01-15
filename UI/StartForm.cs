@@ -251,19 +251,18 @@ namespace MyForm
             var selectedDelay = ((KeyValuePair<int, string>)delay.SelectedItem).Key;
             timer = new Timer();
 
+
             var firstSort = (SortAlgorithm<int>)firstSelectSortingType.SelectedItem;
             var secondSort = (SortAlgorithm<int>)secondSelectSortingType.SelectedItem;
 
             var randomArray = new Random().CreateArray(int.Parse(size.Text));
 
-            firstSort.SetArray(randomArray);
-            secondSort.SetArray((int[])randomArray.Clone());
+            var firstLog = firstSort.Sort((int[])randomArray.Clone()).Log.GetLog();
+            var secondLog = secondSort.Sort(randomArray).Log.GetLog();
 
-            firstSort.Sort();
-            secondSort.Sort();
+            //var firstLog = new SortLogger<int>(firstSort.Sort((int[])randomArray.Clone())).GetLog();
+            //var secondLog = new SortLogger<int>(secondSort.Sort(randomArray)).GetLog();
 
-            var firstLog = firstSort.SortableArray.Logger.GetLog();
-            var secondLog = secondSort.SortableArray.Logger.GetLog();
 
             int tickCount = 0;
             timer.Interval = selectedDelay;

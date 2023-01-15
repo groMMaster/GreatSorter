@@ -1,75 +1,71 @@
 using GreatSorter;
-using System.Diagnostics.Metrics;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Threading;
-using System.Diagnostics;
+using Timer = System.Windows.Forms.Timer;
 
 namespace MyForm
 {
-    public partial class StartForm : Form
+    public class StartForm : Form
     {
-        private TableLayoutPanel body = new TableLayoutPanel
+        private TableLayoutPanel body = new()
         {
             Dock = DockStyle.Fill,
             BackColor = Color.WhiteSmoke
         };
 
-        private TableLayoutPanel menu = new TableLayoutPanel
+        private TableLayoutPanel menu = new()
         {
             Dock = DockStyle.Fill,
             BackColor = Color.WhiteSmoke
         };
 
-        private TableLayoutPanel picters = new TableLayoutPanel
+        private TableLayoutPanel picters = new()
         {
             Dock = DockStyle.Fill,
             BackColor = Color.WhiteSmoke
         };
 
-        private TableLayoutPanel bottom = new TableLayoutPanel
+        private TableLayoutPanel bottom = new()
         {
             Dock = DockStyle.Fill,
             BackColor = Color.WhiteSmoke
         };
 
-        private TableLayoutPanel parameters = new TableLayoutPanel
+        private TableLayoutPanel parameters = new()
         {
             Dock = DockStyle.Fill,
             BackColor = Color.WhiteSmoke
         };
 
-        private TableLayoutPanel actions = new TableLayoutPanel
+        private TableLayoutPanel actions = new()
         {
             Dock = DockStyle.Fill,
             BackColor = Color.WhiteSmoke
         };
 
-        private PictureBox firstPicture = new PictureBox
+        private PictureBox firstPicture = new()
         {
             Dock = DockStyle.Top,
             Size = new Size(400, 400),
             BackColor = Color.White
         };
 
-        private PictureBox secondPicture = new PictureBox
+        private PictureBox secondPicture = new()
         {
             Dock = DockStyle.Top,
             Size = new Size(400, 400),
             BackColor = Color.White
         };
 
-        private ComboBox firstSelectSortingType = new ComboBox
+        private ComboBox firstSelectSortingType = new()
         {
             Dock = DockStyle.Bottom
         };
 
-        private ComboBox secondSelectSortingType = new ComboBox
+        private ComboBox secondSelectSortingType = new()
         {
             Dock = DockStyle.Bottom
         };
 
-        private NumericUpDown size = new NumericUpDown
+        private NumericUpDown size = new()
         {
             Dock = DockStyle.Top,
             Value = 10,
@@ -78,44 +74,67 @@ namespace MyForm
             Minimum = 10
         };
 
-        private ComboBox speed = new ComboBox
+        private ComboBox delay = new()
         {
             Dock = DockStyle.Top
         };
 
-        private Button start = new Button
+        private Button start = new()
         {
             Dock = DockStyle.Fill,
             Text = "Пуск",
         };
 
-        private Button stop = new Button
+        private Button stop = new()
         {
             Dock = DockStyle.Fill,
             Text = "Прервать",
             Enabled = false
         };
 
-        private Button log = new Button
+        private Button log = new()
         {
             Dock = DockStyle.Fill,
             Text = "Загрузить журнал",
             Enabled = false
         };
 
+        private Timer timer;
+        private ArrayVisualizer firstArrayVisualizer;
+        private ArrayVisualizer secondArrayVisualizer;
+
         public StartForm(SortAlgorithm<int>[] sortAlgorithms)
         {
             InitializeComponent(sortAlgorithms);
+            Load += SetDelayValues;
+        }
+
+        private void SetDelayValues(object sender, EventArgs e)
+        {
+            var defaultDelay = 50;
+
+            var speedByDelay = new Dictionary<int, string>()
+            {
+                {100, "Медленно"},
+                {defaultDelay, "По умолчанию"},
+                {10, "Быстро"},
+            };
+
+            delay.DataSource = new BindingSource(speedByDelay, null);
+            delay.DisplayMember = "Value";
+            delay.ValueMember = "Key";
+
+            delay.SelectedValue = defaultDelay;
         }
 
         private void InitializeComponent(SortAlgorithm<int>[] sortAlgorithms)
         {
-            this.SuspendLayout();
+            SuspendLayout();
 
             Size = new Size(1080, 720);
-            
+
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            MinimizeBox= false;
+            MinimizeBox = false;
             MaximizeBox = false;
             DoubleBuffered = true;
 
@@ -148,8 +167,11 @@ namespace MyForm
             picters.Controls.Add(firstSelectSortingType, 0, 0);
             picters.Controls.Add(secondSelectSortingType, 1, 0);
 
-            firstSelectSortingType.Items.AddRange(sortAlgorithms);
-            secondSelectSortingType.Items.AddRange(sortAlgorithms);
+            firstSelectSortingType.DataSource = new BindingSource(sortAlgorithms, null);
+            firstSelectSortingType.DisplayMember = "Name";
+
+            secondSelectSortingType.DataSource = new BindingSource(sortAlgorithms, null);
+            secondSelectSortingType.DisplayMember = "Name";
 
             firstSelectSortingType.SelectedItem = sortAlgorithms[0];
             secondSelectSortingType.SelectedItem = sortAlgorithms[1];
@@ -186,26 +208,16 @@ namespace MyForm
 
             parameters.Controls.Add(size, 1, 0);
 
-            
-
             parameters.Controls.Add(new Label
             {
                 Dock = DockStyle.Top,
                 Text = "Выберите скорость сортировки",
                 Font = new Font("Arial", 12)
-            }, 
+            },
             0, 1);
 
-            parameters.Controls.Add(speed, 1, 1);
-            speed.Items.AddRange(new string[]
-            {
-                "Медленно",
-                "По умолчанию",
-                "Быстро"
-            });
-
-            speed.SelectedItem = "По умолчанию";
-            speed.DropDownStyle = ComboBoxStyle.DropDownList;
+            delay.DropDownStyle = ComboBoxStyle.DropDownList;
+            parameters.Controls.Add(delay, 1, 1);
 
             actions.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
             actions.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
@@ -218,37 +230,70 @@ namespace MyForm
             start.Click += (sender, args) => StartClick();
             stop.Click += (sender, args) =>
             {
-
+                stop.Enabled = false;
+                start.Enabled = true;
+                timer.Stop();
             };
+
+            firstArrayVisualizer = new ArrayVisualizer(firstPicture);
+            secondArrayVisualizer = new ArrayVisualizer(secondPicture);
 
             Controls.Add(body);
             PerformLayout();
             ResumeLayout(false);
         }
 
-        private async void StartClick()
+        private void StartClick()
         {
-            start.Enabled = false;
             stop.Enabled = true;
+            start.Enabled = false;
 
-            var firstVisualiser = new Visualiser(firstPicture, speed.Text);
-            var secondVisualiser = new Visualiser(secondPicture, speed.Text);
+            var selectedDelay = ((KeyValuePair<int, string>)delay.SelectedItem).Key;
+            timer = new Timer();
 
             var firstSort = (SortAlgorithm<int>)firstSelectSortingType.SelectedItem;
             var secondSort = (SortAlgorithm<int>)secondSelectSortingType.SelectedItem;
 
             var randomArray = new Random().CreateArray(int.Parse(size.Text));
 
+            var firstLogger = new SortLogger<int>((int[])randomArray.Clone());
+            var secondLogger = new SortLogger<int>((int[])randomArray.Clone());
+
             firstSort.SetArray(randomArray);
             secondSort.SetArray((int[])randomArray.Clone());
 
-            firstSort.SortableArray.RegisterObserver(firstVisualiser);
-            secondSort.SortableArray.RegisterObserver(secondVisualiser);
+            firstSort.SortableArray.RegisterObserver(firstLogger);
+            secondSort.SortableArray.RegisterObserver(secondLogger);
 
-            await ParallelSortExecutor<int>.Execute(firstSort, secondSort);
+            firstSort.Sort();
+            secondSort.Sort();
 
-            start.Enabled = true;
-            stop.Enabled = false;
+            int tickCount = 0;
+            timer.Interval = selectedDelay;
+            timer.Tick += (sender, args) =>
+            {
+                tickCount++;
+
+                if (tickCount < firstLogger.Count + 1)
+                {
+                    firstArrayVisualizer.Draw(firstLogger.GetNext());
+                }
+
+                if (tickCount < secondLogger.Count + 1)
+                {
+                    secondArrayVisualizer.Draw(secondLogger.GetNext());
+                }
+
+                if (tickCount > firstLogger.Count && tickCount > secondLogger.Count)
+                {
+                    stop.Enabled = false;
+                    start.Enabled = true;
+                    tickCount = 0;
+                    timer.Stop();
+                }
+            };
+
+            timer.Start();
         }
     }
 }

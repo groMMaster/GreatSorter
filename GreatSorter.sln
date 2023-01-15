@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreatSorter", "GreatSorter\GreatSorter.csproj", "{27B63894-5A37-4A9B-952D-539B93AC6945}"
 EndProject
+<<<<<<< Updated upstream
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{2D556BA9-C13C-4577-91BD-350558A4B330}"
+=======
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "GreatSorter.Tests\Tests.csproj", "{9B38ADA2-F1DA-47A4-8CB6-CEF28EAD3E78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "MyForm\UI.csproj", "{ADAAAF5C-9E1A-4826-AC3B-26092270446B}"
+>>>>>>> Stashed changes
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -12,7 +12,7 @@ namespace GreatSorter.Tests.Algorithms
         [Test]
         public void SortDefaultUnsortedArray()
         {
-            CheckCorrectSorting(defaultUnsortedArray, new SelectionSort<int>(cloneDefaultUnsortedArray));
+            CheckCorrectSorting(defaultUnsortedArray, new SelectionSort<int>());
         }
 
         [Test]
@@ -20,13 +20,13 @@ namespace GreatSorter.Tests.Algorithms
         {
             var rndArray = GetRandomArray(10, -100, 100);
             var cloneRndArray = (int[])rndArray.Clone();
-            CheckCorrectSorting(rndArray, new SelectionSort<int>(cloneRndArray));
+            CheckCorrectSorting(rndArray, new SelectionSort<int>());
         }
 
         [Test]
         public void ThrowExceptionIfArrayIsNull()
         {
-            Assert.Throws<NullReferenceException>(() => new SelectionSort<int>(null).Sort());
+            Assert.Throws<NullReferenceException>(() => new SelectionSort<int>().Sort(null));
         }
     }
 }

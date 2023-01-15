@@ -9,7 +9,8 @@ namespace GreatSorter
     {
         protected override SortableArray<T> Sort(SortableArray<T> array)
         {
-            return Sort(array, 0, 0);
+            Sort(array, 0, 0);
+            return array;
         }
 
         public SortableArray<T> Sort(SortableArray<T> array, int minIndex, int maxIndex)

@@ -29,9 +29,9 @@ namespace GreatSorter.Tests.Algorithms
             var sortedArray = (int[])unsortedArray.Clone();
             Array.Sort(sortedArray);
 
-            sortAlgorithm.Sort();
+            sortAlgorithm.Sort(unsortedArray);
 
-            CollectionAssert.AreEqual(sortedArray, sortAlgorithm.SortableArray.GetValues);
+            CollectionAssert.AreEqual(sortedArray, sortAlgorithm.Sort(unsortedArray).GetValues);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Castle.Core.Logging;
 
 namespace GreatSorter
 {
@@ -12,12 +13,15 @@ namespace GreatSorter
         public ReadOnlyCollection<T> GetValues => Array.AsReadOnly(values);
         public int Length => values.Length;
 
+        public SortLogger<T> Log { get; private set; }  
+
         private event EventHandler observers;
 
         public SortableArray(params T[] values)
         {
             if (values == null) throw new NullReferenceException();
             this.values = values;
+            Log = new SortLogger<T>(this);
         }
 
         public void Swap(int firstIndex, int secondIndex)

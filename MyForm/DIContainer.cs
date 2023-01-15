@@ -1,14 +1,6 @@
 ﻿using GreatSorter;
 using MyForm;
 using Ninject;
-using Ninject.Extensions.Conventions;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WinFormsApp1
 {

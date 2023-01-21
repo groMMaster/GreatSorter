@@ -3,69 +3,56 @@
     public class ArrayVisualizer : IVisualizer
     {
         private PictureBox pictureBox;
+        private Pen pen;
+        
+        private int widthPictureBox;
+        private int heightPictureBox;
+
+        private const int margin = 20;
+        private const int widthPen = 2;
 
         public ArrayVisualizer(PictureBox pictureBox)
         {
+            pen = new Pen(Color.Black, widthPen);
             this.pictureBox = pictureBox;
+
+            widthPictureBox = pictureBox.Width;
+            heightPictureBox = pictureBox.Height;
         }
 
         public void Draw(int[] array)
         {
-            var width = pictureBox.Width;
-            var height = pictureBox.Height;
-            var count = array.Length;
-            var margin = 20;
-            var yHeight = (height - 4 * margin) / count;
+            var numberElements = array.Length;
+            var yHeight = (heightPictureBox - 4 * margin) / numberElements;
 
             var widthPen = 2;
-            Pen pen = new Pen(Color.Black, widthPen);
 
-            var x = margin * 2;
-            var y1 = height - margin * 2;
+            var x = margin * 2f;
+            var y1 = heightPictureBox - margin * 2f;
 
-            var stepX = (double)(width - 4 * margin - widthPen * count) / (count - 1);
-            var remStepX = stepX - (int)stepX;
-            var sumRemStepX = 0.0;
+            var stepX = CalcStepX(numberElements);
 
             pictureBox.Paint += (sender, args) =>
             {
                 args.Graphics.Clear(Color.White);
                 foreach (var e in array)
                 {
-                    CalcRemStepX(ref sumRemStepX, ref x, remStepX);
                     var y2 = y1 - yHeight * (int)(object)e;
 
-                    var p1 = new Point(x, y1);
-                    var p2 = new Point(x, y2);
+                    var start = new PointF(x, y1);
+                    var end = new PointF(x, y2);
 
-                    x += (int)stepX + widthPen;
-                    args.Graphics.DrawLine(pen, p1, p2);
+                    x += stepX + widthPen;
+                    args.Graphics.DrawLine(pen, start, end);
                 }
             };
 
             pictureBox.Invalidate();
         }
 
-        private void CalcRemStepX(ref double sumRemStepX, ref int x, double remStepX)
+        private float CalcStepX(int numberElements)
         {
-            if (sumRemStepX < 2)
-            {
-                sumRemStepX += remStepX;
-            }
-            else
-            {
-                sumRemStepX -= 2;
-                x += 2;
-            }
-            if (sumRemStepX < 1)
-            {
-                sumRemStepX += remStepX;
-            }
-            else
-            {
-                sumRemStepX--;
-                x++;
-            }
+            return (float)(widthPictureBox - 4 * margin - widthPen * numberElements) / (numberElements - 1);
         }
     }
 }
